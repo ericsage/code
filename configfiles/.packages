@@ -11,7 +11,6 @@ curl
 dnstop
 docker
 elfutils
-elinks
 flex
 gcc
 gdb
@@ -27,7 +26,6 @@ linux-headers
 libc-dev
 libtool
 ltrace
-lynx
 make
 nasm
 nmap
@@ -45,5 +43,6 @@ tmux
 tree
 valgrind
 vim
+w3m
 yasm
 zip
