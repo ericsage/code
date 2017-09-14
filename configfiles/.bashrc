@@ -20,14 +20,14 @@
 # ----------------------------------------------------------------------------- #
 
 gb () {
-  git branch 2> /dev/null | sed -e 's/* \(.*\)/ | ⑂ \1 /'
+  git branch 2> /dev/null | sed -e 's/* \(.*\)/ ⑂ \1 /'
 }
 gl () {
   git log --oneline -n 1 2> /dev/null | sed -e 's/\(.*\)/✎ \1 /'
 }
 HOURGLASS='⧖'
 COMPASS='✧'
-export PS1="\n \[$HOURGLASS\] \t \[$HOURGLASS\] | \[$COMPASS\] \w \[$COMPASS\]$(gb)\$(gl)\n \! \$ "
+export PS1="\n \[$HOURGLASS\] \t \[$COMPASS\] \w $(gb)\$(gl)\n \! \$ "
 
 # ----------------------------------------------------------------------------- #
 # -------------------------------- C O N F I G -------------------------------- #
@@ -153,3 +153,5 @@ export GOPATH=/root/Code
 export PATH=$PATH:$HOME/Code/bin:/usr/bin/go/bin
 
 # ----------------------------------------------------------------------------- #
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
