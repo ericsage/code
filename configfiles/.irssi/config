@@ -24,18 +24,9 @@ channels = (
 )
 
 settings = {
-  "fe-common/core" = {
-    # Solarized
-    theme = "solarized-universal";
-    hilight_color = "= %R";
-  };
   core = { real_name = "root"; user_name = "root"; nick = "root"; };
   "fe-text" = { actlist_sort = "refnum"; };
 };
-
-hilights = (
-  { text = "confuzed"; color = "%M"; nick = "yes"; word = "yes"; }
-);
 
 statusbar = {
   items = {

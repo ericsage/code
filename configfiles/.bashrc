@@ -20,19 +20,14 @@
 # ----------------------------------------------------------------------------- #
 
 gb () {
-  git branch 2> /dev/null | sed -e 's/* \(.*\)/ ⑂ \1 /'
+  git branch 2> /dev/null | sed -e 's/* \(.*\)/ | ⑂ \1 /'
 }
 gl () {
   git log --oneline -n 1 2> /dev/null | sed -e 's/\(.*\)/✎ \1 /'
 }
-ARROW='▶ '
 HOURGLASS='⧖'
 COMPASS='✧'
-WHITE_ON_CYAN='\e[6;37;46m'
-WHITE_ON_GOLD='\e[5;37;43m'
-GREY_ON_WHITE='\e[1;32;47m'
-RESET='\e[0m'
-export PS1="\n\[$WHITE_ON_GOLD\] \[$HOURGLASS\] \d \t \[$HOURGLASS\] \[$WHITE_ON_CYAN\] \[$COMPASS\] \w \[$COMPASS\] \[$GREY_ON_WHITE\]\$(gb)\$(gl)\n\[$WHITE_ON_CYAN\] \! \$ \[$RESET\] "
+export PS1="\n \[$HOURGLASS\] \t \[$HOURGLASS\] | \[$COMPASS\] \w \[$COMPASS\]$(gb)\$(gl)\n \! \$ "
 
 # ----------------------------------------------------------------------------- #
 # -------------------------------- C O N F I G -------------------------------- #
@@ -40,7 +35,6 @@ export PS1="\n\[$WHITE_ON_GOLD\] \[$HOURGLASS\] \d \t \[$HOURGLASS\] \[$WHITE_ON
 
 export LANG=en_US.UTF-8 # Set Locale
 set -o vi               # Turn vi mode on
-export CLICOLOR=1       # Colors for ls
 
 # ----------------------------------------------------------------------------- #
 # -------------------------------- L A Y O U T -------------------------------- #

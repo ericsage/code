@@ -1,10 +1,13 @@
 autoconf
 automake
+bash
+bash-completion
 binutils
 byacc
 ccache
 cmake
 ctags
+curl
 dnstop
 docker
 elfutils
@@ -21,6 +24,7 @@ iptables
 irssi
 jq
 linux-headers
+libc-dev
 libtool
 ltrace
 lynx
@@ -28,8 +32,6 @@ make
 nasm
 nmap
 nodejs-current
-ntop
-patch
 patchutils
 pkgconfig
 protobuf
@@ -37,15 +39,11 @@ python3
 rtorrent
 strace
 sysstat
-tcp_dump
+tcpdump
 the_silver_searcher
 tmux
-traceroute
 tree
 valgrind
 vim
-wget
-whois
 yasm
-youtube-dl
 zip

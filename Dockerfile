@@ -4,34 +4,39 @@ LABEL maintainer "Eric Sage <eric.david.sage@gmail.com>"
 # Place config files
 ADD /configfiles /root
 
+# Switch to Edge repositories
+ADD /repositories /etc/apk/repositories
+RUN \
+apk upgrade --update-cache --available $> /dev/null
+
 # Install base packages
 RUN \
-apk add -y $(cat /root/.packages) && \
-apk cache clean
+apk add -q $(cat /root/.packages)
 
 # Install global tools with pip
 RUN \
-pip3 install --upgrade pip setuptools && \
-pip3 install virtualenv wheel twine awscli docker-compose
+pip3 install --upgrade -qqq pip setuptools && \
+pip3 install -qqq virtualenv wheel twine awscli docker-compose
 
 # Install global tools with npm
-RUN npm install -g create-react-app create-react-native-app
+RUN \
+npm install -g --silent create-react-app create-react-native-app
 
 #Install GCloud SDK and Kubectl
 RUN \
-wget https://dl.google.com/dl/cloudsdk/channels/rapid/google-cloud-sdk.zip && \
-unzip google-cloud-sdk.zip && rm google-cloud-sdk.zip && \
+wget -q https://dl.google.com/dl/cloudsdk/channels/rapid/google-cloud-sdk.zip && \
+unzip -q google-cloud-sdk.zip && rm google-cloud-sdk.zip && \
 google-cloud-sdk/install.sh \
  --path-update=true \
  --bash-completion=true \
  --rc-path=/.bashrc \
- --additional-components app kubectl alpha beta
+ --additional-components app kubectl alpha beta &> /dev/null
 
 # Install vim plugins
 RUN \
-vim -u NONE +'silent! source ~/.vimrc' +PlugInstall +qa! %> /dev/null && \
-export GOROOT="/usr/bin/go" ; export GOPATH="/root/Code" ; export PATH=$PATH:/usr/bin/go/bin ; \
-echo " " | vim +GoInstallBinaries +qa! %> /dev/null
+vim -u NONE +'silent! source ~/.vimrc' +PlugInstall +qa! &> /dev/null && \
+export GOPATH="/root/Code" && \
+echo " " | vim +GoInstallBinaries +qa! &> /dev/null
 
 # Set the initial directory
 WORKDIR /root/Code/src/github.com/ericsage
@@ -40,4 +45,4 @@ WORKDIR /root/Code/src/github.com/ericsage
 ENV LANG en_US.UTF-8
 
 # Set command to primary shell
-CMD ["/bin/tmux", "-2"]
+CMD ["/usr/bin/tmux", "-2", "new-session", "-s", "main"]

@@ -45,11 +45,6 @@ Plug 'mhinz/vim-signify'                     " Adds VCS markings in the gutter
 Plug 'bronson/vim-trailing-whitespace'       " Marks and removes all trailing spaces
 Plug 'nathanaelkane/vim-indent-guides'       " Show fancy indent markers
 Plug 'vim-airline/vim-airline'               " Customizes the status line
-Plug 'vim-airline/vim-airline-themes'        " Themes for the status line
-
-" ----------------- COLORSCHEME ----------------- "
-Plug 'altercation/vim-colors-solarized'      " Solarized
-Plug 'morhetz/gruvbox'                       " Gruvbox
 
 " ------------------- BROWSER ------------------- "
 Plug 'scrooloose/nerdtree'                   " File browser
@@ -83,7 +78,7 @@ call plug#end()
 " ----------------------------------------------------------------------------- "
 
 " ---------------- COMPATABILITY ---------------- "
- set nocompatible                     " Turn vi compatability mode off
+set nocompatible                     " Turn vi compatability mode off
 
 " ------------------- INDENTS ------------------- "
 filetype plugin indent on             " Indent using filetype files if they exist/end Vundle
@@ -91,11 +86,11 @@ set autoindent                        " Copy the indentation from the previous l
 set smartindent                       " Insert an extra indent level in some cases
 
 " ------------------ INTERFACE ------------------ "
-syntax on                             " Display syntax highlighting
+syntax off                            " Do not display syntax highlighting
+set t_Co=0                            " No color support
 set shortmess=I                       " Hide the intro message
 set number                            " Show line numbers
 set numberwidth=2                     " Use at least two columns to display line numbers
-highlight clear SignColumn            " Make the sign column use default coloring
 
 " ----------------- STATUS LINE ----------------- "
 set ruler                             " Show line number on status line
@@ -229,11 +224,7 @@ nnoremap <C-s> :nohlsearch<cr>
 " ----------------- P L U G I N   C U S T O M I Z A T I O N S ----------------- "
 " ----------------------------------------------------------------------------- "
 
-" ----------------- SOLARIZED ------------------ "
-let g:solarized_termtrans=1
-
 " ------------------ AIRLINE ------------------- "
-let g:airline_theme='solarized'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#ale#enabled = 1
 
@@ -313,13 +304,5 @@ au FileType go nmap <leader>de <Plug>(go-def-vertical)
 " ------------------- VIM-RUST --------------------- "
 let g:rustfmt_command = "rustup run nightly rustfmt"
 let g:rustfmt_autosave = 1
-
-" ----------------------------------------------------------------------------- "
-" --------------------------- C O L O R S C H E M E --------------------------- "
-" ----------------------------------------------------------------------------- "
-
-set background=dark                   " Set the colorscheme background color
-colorscheme solarized                 " Set a colorscheme
-highlight CursorLine ctermbg=White    " Set the cursorline background to white
 
 " ----------------------------------------------------------------------------- "
