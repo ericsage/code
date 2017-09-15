@@ -164,6 +164,12 @@ au FileType go set tabstop=4
 " ------------------------------ M A P P I N G S ------------------------------ "
 " ----------------------------------------------------------------------------- "
 
+" ---------------- QUICK ACCESS ----------------- "
+" Edit vimrc
+:nnoremap <leader>ev :vsplit $MYVIMRC<cr>
+" Reload vimrc
+:nnoremap <leader>sv :source $MYVIMRC<cr>
+
 " ------------------- COMMAND ------------------- "
 " Use ; as :
 nnoremap ; :

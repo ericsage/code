@@ -1,42 +1,46 @@
-FROM alpine
+FROM alpine:latest
+
 LABEL maintainer "Eric Sage <eric.david.sage@gmail.com>"
 
-# Place config files
-ADD /configfiles /root
+# Set and update package repositories
+COPY /repositories /etc/apk/repositories
+RUN apk upgrade --update-cache --available $> /dev/null
 
-# Switch to Edge repositories
-ADD /repositories /etc/apk/repositories
+# Install system packages
+COPY /packages /root/.packages
+RUN apk add -q $(cat /root/.packages)
+
+# Install python packages
 RUN \
-apk upgrade --update-cache --available $> /dev/null
+pip3 install --upgrade -qqq \
+  awscli \
+  docker-compose \
+  pip \
+  setuptools \
+  twine \
+  virtualenv \
+  wheel
 
-# Install base packages
-RUN \
-apk add -q $(cat /root/.packages)
-
-# Install global tools with pip
-RUN \
-pip3 install --upgrade -qqq pip setuptools && \
-pip3 install -qqq virtualenv wheel twine awscli docker-compose
-
-# Install global tools with npm
-RUN \
-npm install -g --silent create-react-app create-react-native-app
-
-#Install GCloud SDK and Kubectl
+# Install gcloud SDK and kubectl
 RUN \
 wget -q https://dl.google.com/dl/cloudsdk/channels/rapid/google-cloud-sdk.zip && \
-unzip -q google-cloud-sdk.zip && rm google-cloud-sdk.zip && \
-google-cloud-sdk/install.sh \
+unzip -q google-cloud-sdk.zip -d /usr/lib && rm google-cloud-sdk.zip && \
+/usr/lib/google-cloud-sdk/install.sh \
+ --quiet \
  --path-update=true \
  --bash-completion=true \
- --rc-path=/.bashrc \
- --additional-components app kubectl alpha beta &> /dev/null
+ --rc-path=/root/.bashrc \
+ --additional-components kubectl alpha beta &> /dev/null
 
-# Install vim plugins
+# Install vim plugins and plugin binaries
+ADD /configfiles/.vimrc /root/.vimrc
 RUN \
 vim -u NONE +'silent! source ~/.vimrc' +PlugInstall +qa! &> /dev/null && \
 export GOPATH="/root/Code" && \
-echo " " | vim +GoInstallBinaries +qa! &> /dev/null
+echo " " | vim +GoInstallBinaries +qa!  &> /dev/null
+
+# Add user configuration files
+ADD /configfiles /root
 
 # Set the initial directory
 WORKDIR /root/Code/src/github.com/ericsage
@@ -44,5 +48,5 @@ WORKDIR /root/Code/src/github.com/ericsage
 # Set the language
 ENV LANG en_US.UTF-8
 
-# Set command to primary shell
-CMD ["/usr/bin/tmux", "-2", "new-session", "-s", "main"]
+# Set starting process to tmux
+CMD [ "/usr/bin/tmux", "-2", "new-session", "-s", "main" ]
