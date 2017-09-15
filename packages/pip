@@ -1,0 +1,7 @@
+awscli
+docker-compose
+pip
+setuptools
+twine
+virtualenv
+wheel

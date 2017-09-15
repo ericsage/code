@@ -7,19 +7,12 @@ COPY /repositories /etc/apk/repositories
 RUN apk upgrade --update-cache --available $> /dev/null
 
 # Install system packages
-COPY /packages /root/.packages
-RUN apk add -q $(cat /root/.packages)
+COPY /packages/apk /root/.packages/apk
+RUN apk add -q $(cat /root/.packages/apk)
 
 # Install python packages
-RUN \
-pip3 install --upgrade -qqq \
-  awscli \
-  docker-compose \
-  pip \
-  setuptools \
-  twine \
-  virtualenv \
-  wheel
+COPY /packages/pip /root/.packages/pip
+RUN pip3 install --upgrade -qqq -r /root/.packages/pip
 
 # Install gcloud SDK and kubectl
 RUN \

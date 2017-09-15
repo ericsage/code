@@ -146,6 +146,7 @@ httpDebug () { /usr/bin/curl $@ -o /dev/null -w "dns: %{time_namelookup} connect
 # ------------------------------- E X P O R T S ------------------------------- #
 # ----------------------------------------------------------------------------- #
 
+export LESS='R'
 export FZF_CTRL_T_OPTS="--preview '(highlight -O ansi -l {} 2> /dev/null || cat {} || tree -C {}) 2> /dev/null | head -200'"
 export GOROOT=/usr/bin/go
 export GOPATH=/root/Code

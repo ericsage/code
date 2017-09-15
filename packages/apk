@@ -17,12 +17,14 @@ gcc
 gdb
 git
 go
+groff
 htop
 iftop
 iotop
 iptables
 irssi
 jq
+less
 libc-dev
 libtool
 linux-headers
