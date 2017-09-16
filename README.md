@@ -1,7 +1,7 @@
 
 Sage Code
 ===========
-My complete development environment inside of a Docker image!
+My development environment inside of a Docker image!
 
 What's inside
 -------------
