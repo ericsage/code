@@ -1,5 +1,6 @@
 awscli
 docker-compose
+jedi
 pip
 setuptools
 twine
