@@ -337,5 +337,9 @@ highlight SignColumn cterm=reverse ctermbg=none ctermfg=none
 highlight ColorColumn cterm=reverse ctermbg=none ctermfg=none
 highlight CursorColumn cterm=reverse ctermbg=none ctermfg=none
 highlight TabLine cterm=reverse,underline ctermbg=none ctermfg=none
+highlight SpellBad cterm=reverse,underline,bold ctermbg=none ctermfg=none
+highlight SpellCap cterm=reverse,underline,italic ctermbg=none ctermfg=none
+highlight SpellRare cterm=reverse,underline ctermbg=none ctermfg=none
+highlight SpellLocal cterm=reverse,underline ctermbg=none ctermfg=none
 
 " ----------------------------------------------------------------------------- "
