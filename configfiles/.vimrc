@@ -86,7 +86,6 @@ set smartindent                       " Insert an extra indent level in some cas
 
 " ------------------ INTERFACE ------------------ "
 syntax off                            " Do not display syntax highlighting
-set t_Co=0                            " No color support
 set shortmess=I                       " Hide the intro message
 set number                            " Show line numbers
 set numberwidth=2                     " Use at least two columns to display line numbers
@@ -245,6 +244,7 @@ let g:jedi#smart_auto_mappings = 0
 " -------------------- ALE --------------------- "
 let g:ale_sign_column_always = 1
 let g:ale_lint_delay = 1000
+highlight ALESignColumnWithoutErrors ctermbg=none ctermfg=none
 
 " ----------------- UTILSNIPS ------------------ "
 let g:UltiSnipsExpandTrigger="<tab>"
@@ -261,18 +261,6 @@ let g:go_addtags_transform = "snakecase"
 let g:go_fmt_command = "goimports"
 " Run the metalinter on save
 let g:go_metalinter_autosave = 1
-" Highlight tokens with the same name
-let g:go_auto_sameids = 1
-" Set syntax tokens to color
-let g:go_highlight_types = 1
-let g:go_highlight_fields = 1
-let g:go_highlight_functions = 1
-let g:go_highlight_methods = 1
-let g:go_highlight_operators = 1
-let g:go_highlight_extra_types = 1
-let g:go_highlight_structs = 1
-let g:go_highlight_build_constraints = 1
-let g:go_highlight_chan_whitespace_error = 1
 " Calls `go run` for the current main package
 au FileType go nmap <C-g> <Plug>(go-run)
 " Calls `go test` for the current main package
@@ -309,5 +297,40 @@ au FileType go nmap <leader>de <Plug>(go-def-vertical)
 " ------------------- VIM-RUST --------------------- "
 let g:rustfmt_command = "rustup run nightly rustfmt"
 let g:rustfmt_autosave = 1
+
+colorscheme default
+
+highlight ModeMsg cterm=reverse
+highlight LineNr ctermbg=none ctermfg=none
+highlight Question ctermbg=none ctermfg=none
+highlight SpecialKey ctermbg=none ctermfg=none
+highlight DiffAdd ctermbg=none ctermfg=none
+highlight NonText cterm=bold ctermbg=none ctermfg=none
+highlight Directory ctermbg=none ctermfg=none
+highlight PmenuSel ctermbg=none ctermfg=none
+highlight DiffChange cterm=reverse ctermbg=none ctermfg=none
+highlight DiffDelete cterm=reverse ctermbg=none ctermfg=none
+highlight DiffText cterm=reverse ctermbg=none ctermfg=none
+highlight DiffText cterm=reverse ctermbg=none ctermfg=none
+highlight Pmenu cterm=reverse ctermbg=none ctermfg=none
+highlight PmenuSbar cterm=reverse ctermbg=none ctermfg=none
+highlight PmenuThumb cterm=reverse ctermbg=none ctermfg=none
+highlight Search cterm=reverse ctermbg=none ctermfg=none
+highlight CursorLine cterm=reverse ctermbg=none ctermfg=none
+highlight CursorLineNr cterm=reverse ctermbg=none ctermfg=none
+highlight Title cterm=reverse ctermbg=none ctermfg=none
+highlight MoreMsg cterm=reverse ctermbg=none ctermfg=none
+highlight ErrorMsg cterm=reverse ctermbg=none ctermfg=none
+highlight Warningmsg cterm=reverse ctermbg=none ctermfg=none
+highlight WildMenu cterm=reverse ctermbg=none ctermfg=none
+highlight Folded cterm=reverse ctermbg=none ctermfg=none
+highlight MatchParen cterm=reverse ctermbg=none ctermfg=none
+highlight ExtraWhitespace cterm=reverse ctermbg=none ctermfg=none
+highlight TabLineFill cterm=reverse ctermbg=none ctermfg=none
+highlight FoldColumn cterm=reverse ctermbg=none ctermfg=none
+highlight SignColumn cterm=reverse ctermbg=none ctermfg=none
+highlight ColorColumn cterm=reverse ctermbg=none ctermfg=none
+highlight CursorColumn cterm=reverse ctermbg=none ctermfg=none
+highlight TabLine cterm=reverse,underline ctermbg=none ctermfg=none
 
 " ----------------------------------------------------------------------------- "

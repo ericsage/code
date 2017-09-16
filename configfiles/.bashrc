@@ -148,10 +148,13 @@ httpDebug () { /usr/bin/curl $@ -o /dev/null -w "dns: %{time_namelookup} connect
 
 export LESS='R'
 export FZF_CTRL_T_OPTS="--preview '(highlight -O ansi -l {} 2> /dev/null || cat {} || tree -C {}) 2> /dev/null | head -200'"
-export GOROOT=/usr/bin/go
 export GOPATH=/root/Code
-export PATH=$PATH:$HOME/Code/bin:/usr/bin/go/bin
+export PATH=$PATH:$HOME/Code/bin
 
 # ----------------------------------------------------------------------------- #
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/usr/lib/google-cloud-sdk/path.bash.inc' ]; then source '/usr/lib/google-cloud-sdk/path.bash.inc'; fi
+# The next line enables shell command completion for gcloud.
+if [ -f '/usr/lib/google-cloud-sdk/completion.bash.inc' ]; then source '/usr/lib/google-cloud-sdk/completion.bash.inc'; fi
