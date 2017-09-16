@@ -11,6 +11,7 @@
 " 2. Settings
 " 3. Mappings
 " 5. Plugin Customizations
+" 6. Colorscheme
 " -----------------------#
 
 " ----------------------------------------------------------------------------- "
@@ -297,6 +298,10 @@ au FileType go nmap <leader>de <Plug>(go-def-vertical)
 " ------------------- VIM-RUST --------------------- "
 let g:rustfmt_command = "rustup run nightly rustfmt"
 let g:rustfmt_autosave = 1
+
+" ----------------------------------------------------------------------------- "
+" --------------------------- C O L O R S C H E M E --------------------------- "
+" ----------------------------------------------------------------------------- "
 
 colorscheme default
 

@@ -7,24 +7,36 @@
 # ------------------C---------------------------------------C------------------ #
 
 servers = (
-  { address = "chat.freenode.net"; chatnet = "Freenode"; port = "6667"; }
+  { 
+    address = "chat.freenode.net";
+    chatnet = "Freenode";
+    port = "6667";
+  }
 );
 
 chatnets = {
   Freenode = {
-    type      = "IRC";
+    type = "IRC";
     max_kicks = "1";
-    max_msgs  = "4";
+    max_msgs = "4";
     max_whois = "1";
   };
 };
 
 channels = (
   { name = "#go-nuts"; chatnet = "Freenode"; autojoin = "Yes"; }
-)
+);
 
 settings = {
-  core = { real_name = "root"; user_name = "root"; nick = "root"; };
+  "fe-common/core" = {
+    theme = "colorless";
+  };
+  core = {
+    real_name = "root";
+    user_name = "root";
+    nick = "root";
+    recode_transliterate = "no";
+  };
   "fe-text" = { actlist_sort = "refnum"; };
 };
 
@@ -34,4 +46,8 @@ statusbar = {
     act = "{sb Act: $0-}";
     more = "%k%3-- more --%n";
   };
+};
+
+lookandfeel = {
+  colors = OFF;
 };
