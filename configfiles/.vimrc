@@ -245,7 +245,6 @@ let g:jedi#smart_auto_mappings = 0
 " -------------------- ALE --------------------- "
 let g:ale_sign_column_always = 1
 let g:ale_lint_delay = 1000
-highlight ALESignColumnWithoutErrors ctermbg=none ctermfg=none
 
 " ----------------- UTILSNIPS ------------------ "
 let g:UltiSnipsExpandTrigger="<tab>"
@@ -305,41 +304,55 @@ let g:rustfmt_autosave = 1
 
 colorscheme default
 
-highlight ModeMsg cterm=reverse
-highlight LineNr ctermbg=none ctermfg=none
-highlight Question ctermbg=none ctermfg=none
-highlight SpecialKey ctermbg=none ctermfg=none
-highlight DiffAdd ctermbg=none ctermfg=none
-highlight NonText cterm=bold ctermbg=none ctermfg=none
-highlight Directory ctermbg=none ctermfg=none
-highlight PmenuSel ctermbg=none ctermfg=none
-highlight DiffChange cterm=reverse ctermbg=none ctermfg=none
-highlight DiffDelete cterm=reverse ctermbg=none ctermfg=none
-highlight DiffText cterm=reverse ctermbg=none ctermfg=none
-highlight DiffText cterm=reverse ctermbg=none ctermfg=none
-highlight Pmenu cterm=reverse ctermbg=none ctermfg=none
-highlight PmenuSbar cterm=reverse ctermbg=none ctermfg=none
-highlight PmenuThumb cterm=reverse ctermbg=none ctermfg=none
-highlight Search cterm=reverse ctermbg=none ctermfg=none
-highlight CursorLine cterm=reverse ctermbg=none ctermfg=none
-highlight CursorLineNr cterm=reverse ctermbg=none ctermfg=none
-highlight Title cterm=reverse ctermbg=none ctermfg=none
-highlight MoreMsg cterm=reverse ctermbg=none ctermfg=none
-highlight ErrorMsg cterm=reverse ctermbg=none ctermfg=none
-highlight Warningmsg cterm=reverse ctermbg=none ctermfg=none
-highlight WildMenu cterm=reverse ctermbg=none ctermfg=none
-highlight Folded cterm=reverse ctermbg=none ctermfg=none
-highlight MatchParen cterm=reverse ctermbg=none ctermfg=none
-highlight ExtraWhitespace cterm=reverse ctermbg=none ctermfg=none
-highlight TabLineFill cterm=reverse ctermbg=none ctermfg=none
-highlight FoldColumn cterm=reverse ctermbg=none ctermfg=none
-highlight SignColumn cterm=reverse ctermbg=none ctermfg=none
-highlight ColorColumn cterm=reverse ctermbg=none ctermfg=none
-highlight CursorColumn cterm=reverse ctermbg=none ctermfg=none
-highlight TabLine cterm=reverse,underline ctermbg=none ctermfg=none
-highlight SpellBad cterm=reverse,underline,bold ctermbg=none ctermfg=none
-highlight SpellCap cterm=reverse,underline,italic ctermbg=none ctermfg=none
-highlight SpellRare cterm=reverse,underline ctermbg=none ctermfg=none
-highlight SpellLocal cterm=reverse,underline ctermbg=none ctermfg=none
+function SyntaxOn()
+  syntax on
+  call ClearColors()
+endfunction
+
+function SyntaxOff()
+  syntax off
+  call ClearColors()
+endfunction
+
+function ClearColors()
+  highlight ModeMsg cterm=reverse
+  highlight LineNr ctermbg=none ctermfg=none
+  highlight Question ctermbg=none ctermfg=none
+  highlight SpecialKey ctermbg=none ctermfg=none
+  highlight DiffAdd ctermbg=none ctermfg=none
+  highlight NonText cterm=bold ctermbg=none ctermfg=none
+  highlight Directory ctermbg=none ctermfg=none
+  highlight PmenuSel ctermbg=none ctermfg=none
+  highlight DiffChange cterm=reverse ctermbg=none ctermfg=none
+  highlight DiffDelete cterm=reverse ctermbg=none ctermfg=none
+  highlight DiffText cterm=reverse ctermbg=none ctermfg=none
+  highlight DiffText cterm=reverse ctermbg=none ctermfg=none
+  highlight Pmenu cterm=reverse ctermbg=none ctermfg=none
+  highlight PmenuSbar cterm=reverse ctermbg=none ctermfg=none
+  highlight PmenuThumb cterm=reverse ctermbg=none ctermfg=none
+  highlight Search cterm=reverse ctermbg=none ctermfg=none
+  highlight CursorLine cterm=reverse ctermbg=none ctermfg=none
+  highlight CursorLineNr cterm=reverse ctermbg=none ctermfg=none
+  highlight Title cterm=reverse ctermbg=none ctermfg=none
+  highlight MoreMsg cterm=reverse ctermbg=none ctermfg=none
+  highlight ErrorMsg cterm=reverse ctermbg=none ctermfg=none
+  highlight Warningmsg cterm=reverse ctermbg=none ctermfg=none
+  highlight WildMenu cterm=reverse ctermbg=none ctermfg=none
+  highlight Folded cterm=reverse ctermbg=none ctermfg=none
+  highlight MatchParen cterm=reverse ctermbg=none ctermfg=none
+  highlight ExtraWhitespace cterm=reverse ctermbg=none ctermfg=none
+  highlight TabLineFill cterm=reverse ctermbg=none ctermfg=none
+  highlight FoldColumn cterm=reverse ctermbg=none ctermfg=none
+  highlight SignColumn cterm=bold ctermbg=none ctermfg=none
+  highlight ColorColumn cterm=reverse ctermbg=none ctermfg=none
+  highlight CursorColumn cterm=reverse ctermbg=none ctermfg=none
+  highlight TabLine cterm=reverse,underline ctermbg=none ctermfg=none
+  highlight SpellBad cterm=reverse,underline,bold ctermbg=none ctermfg=none
+  highlight SpellCap cterm=reverse,underline,italic ctermbg=none ctermfg=none
+  highlight SpellRare cterm=reverse,underline ctermbg=none ctermfg=none
+  highlight SpellLocal cterm=reverse,underline ctermbg=none ctermfg=none
+endfunction
+
+call SyntaxOn()
 
 " ----------------------------------------------------------------------------- "
