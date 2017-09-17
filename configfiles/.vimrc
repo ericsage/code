@@ -11,7 +11,8 @@
 " 2. Settings
 " 3. Mappings
 " 5. Plugin Customizations
-" 6. Colorscheme
+" 6. Functions
+" 7. Colorscheme
 " -----------------------#
 
 " ----------------------------------------------------------------------------- "
@@ -90,6 +91,7 @@ syntax off                            " Do not display syntax highlighting
 set shortmess=I                       " Hide the intro message
 set number                            " Show line numbers
 set numberwidth=2                     " Use at least two columns to display line numbers
+set colorcolumn=80                    " Add a marker at column 80
 
 " ----------------- STATUS LINE ----------------- "
 set ruler                             " Show line number on status line
@@ -164,12 +166,6 @@ au FileType go set tabstop=4
 " ------------------------------ M A P P I N G S ------------------------------ "
 " ----------------------------------------------------------------------------- "
 
-" ---------------- QUICK ACCESS ----------------- "
-" Edit vimrc
-:nnoremap <leader>ev :vsplit $MYVIMRC<cr>
-" Reload vimrc
-:nnoremap <leader>sv :source $MYVIMRC<cr>
-
 " ------------------- COMMAND ------------------- "
 " Use ; as :
 nnoremap ; :
@@ -180,6 +176,12 @@ let mapleader = ","
 let g:mapleader = ","
 let maplocalleader = ","
 let g:maplocalleader = ","
+
+" ---------------- QUICK ACCESS ----------------- "
+" Edit vimrc
+:nnoremap <leader>ev :vsplit $MYVIMRC<cr>
+" Reload vimrc
+:nnoremap <leader>sv :source $MYVIMRC<cr>
 
 " ------------------ WINDOWING ------------------ "
 " Use movement keys to jump between windows
@@ -311,21 +313,22 @@ let g:rustfmt_command = "rustup run nightly rustfmt"
 let g:rustfmt_autosave = 1
 
 " ----------------------------------------------------------------------------- "
-" --------------------------- C O L O R S C H E M E --------------------------- "
+" ----------------------------- F U N C T I O N S ----------------------------- "
 " ----------------------------------------------------------------------------- "
 
-colorscheme default
-
+" Turns on syntax, but keeps vim colors cleared
 function SyntaxOn()
   syntax on
   call ClearColors()
 endfunction
 
+" Turns off syntax, keep vim interface colors cleared
 function SyntaxOff()
   syntax off
   call ClearColors()
 endfunction
 
+" Sets all of vims highlights to none
 function ClearColors()
   highlight ModeMsg cterm=reverse
   highlight LineNr ctermbg=none ctermfg=none
@@ -365,6 +368,25 @@ function ClearColors()
   highlight SpellLocal cterm=reverse,underline ctermbg=none ctermfg=none
 endfunction
 
+" Highlights all columns past 80
+function HighlightLineBoundryWall()
+  let &colorcolumn=join(range(81,999),",")
+endfunction
+
+" Highlights column 81
+function HighlightLineBoundryColumn()
+  let &colorcolumn=81
+endfunction
+
+" ----------------------------------------------------------------------------- "
+" --------------------------- C O L O R S C H E M E --------------------------- "
+" ----------------------------------------------------------------------------- "
+
+colorscheme default
+
+
 call SyntaxOn()
 
 " ----------------------------------------------------------------------------- "
+"
+
