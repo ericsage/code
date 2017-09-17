@@ -22,9 +22,7 @@ unzip -q google-cloud-sdk.zip -d /usr/lib && rm google-cloud-sdk.zip && \
  --quiet \
  --path-update=true \
  --bash-completion=true \
- --additional-components kubectl alpha beta
-
-RUN cat /root/.bashrc
+ --additional-components kubectl alpha beta &> /dev/null
 
 # Install vim plugins and plugin binaries
 ADD /configfiles/.vimrc /root/.vimrc
