@@ -229,6 +229,18 @@ nnoremap <C-s> :nohlsearch<cr>
 " ----------------- P L U G I N   C U S T O M I Z A T I O N S ----------------- "
 " ----------------------------------------------------------------------------- "
 
+" ------------------ STARTIFY ------------------ "
+let g:startify_bookmarks = [ '~/.vimrc', '~/.bashrc', '~/.tmux.conf' ]
+let g:startify_custom_header = [
+      \ " ----------------------------------------------------------------------------- ",
+      \ " ---V--------------V--- SSSSSSS AAAAAAA GGGGGGG EEEEEEE ---V--------------V--- ",
+      \ " ---------------------- S       A     A G       E       ---------------------- ",
+      \ " ---I--------------I--- SSSSSSS AAAAAAA GGGGGGG EEEEEEE ---I--------------I--- ",
+      \ " ----------------------       S A     A G     G E       ---------------------- ",
+      \ " ---M--------------M--- SSSSSSS A     A GGGGGGG EEEEEEE ---M--------------M--- ",
+      \ " ----------------------------------------------------------------------------- ",
+      \ ]
+
 " ------------------ AIRLINE ------------------- "
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#ale#enabled = 1
