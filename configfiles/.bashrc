@@ -41,14 +41,15 @@ set -o vi               # Turn vi mode on
 # ----------------------------------------------------------------------------- #
 
 # -> HOME <- #
-mkdir -p ~/Documents
-mkdir -p ~/Downloads
-mkdir -p ~/Pictures
-mkdir -p ~/Videos
-mkdir -p ~/Graphics
-mkdir -p ~/Code/pkg
-mkdir -p ~/Code/bin
-mkdir -p ~/Code/src/github.com/ericsage
+mkdir -p ~/documents
+mkdir -p ~/downloads
+mkdir -p ~/pictures
+mkdir -p ~/videos
+mkdir -p ~/music
+mkdir -p ~/graphics
+mkdir -p ~/code/pkg
+mkdir -p ~/code/bin
+mkdir -p ~/code/src/github.com/ericsage
 
 # -> VIM <-#
 mkdir -p ~/.vim/backup
@@ -64,27 +65,26 @@ alias ~='cd ~'
 alias ..='cd ../'
 alias ...='cd ../../'
 
-alias doc='cd ~/Documents'
-alias documents='cd ~/Documents'
+alias doc='cd ~/documents'
+alias documents='cd ~/documents'
 
-alias dow='cd ~/Downloads'
-alias downloads='cd ~/Downloads'
+alias dow='cd ~/downloads'
+alias downloads='cd ~/downloads'
 
-alias pic='cd ~/Pictures'
-alias pictures='cd ~/Pictures'
+alias pic='cd ~/pictures'
+alias pictures='cd ~/pictures'
 
-alias vid='cd ~/Videos'
-alias videos='cd ~/Videos'
+alias vid='cd ~/videos'
+alias videos='cd ~/videos'
 
-alias mus='cd ~/Music'
-alias music='cd ~/Music'
+alias mus='cd ~/music'
+alias music='cd ~/music'
 
-alias gra='cd ~/Graphics'
-alias graphics='cd ~/Graphics'
+alias gra='cd ~/graphics'
+alias graphics='cd ~/graphics'
 
-alias c='cd ~/Code/src/github.com/ericsage'
-alias code='cd ~/Code/src/github.com/ericsage'
-alias CODE='cd ~/Code/src/github.com/ericsage'
+alias c='cd ~/code/src/github.com/ericsage'
+alias code='cd ~/code/src/github.com/ericsage'
 
 # -> VIM <- #
 alias v='vim'
@@ -95,7 +95,7 @@ alias g="git"
 
 # -> DOTFILES <- #
 alias evi='vim ~/.vimrc'
-alias ebash='vim ~/.bash_profile'
+alias ebash='vim ~/.bash_rc'
 alias egit='vim ~/.gitconfig'
 
 # -> TMUX <- #
