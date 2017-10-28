@@ -20,7 +20,7 @@
 # ----------------------------------------------------------------------------- #
 
 gb () {
-  git branch 2> /dev/null | sed -e 's/\(.*\)/\n⑂ \1 /'
+  git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\n⑂ \1 /'
 }
 gl () {
   git log --oneline -n 1 2> /dev/null | sed -e 's/\(.*\)/✎ \1 /'
@@ -150,8 +150,8 @@ export LESS='R'
 export FZF_DEFAULT_COMMAND='ag -g ""'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_CTRL_T_OPTS="--preview '(highlight -O ansi -l {} 2> /dev/null || cat {} || tree -C {}) 2> /dev/null | head -200'"
-export GOPATH=/root/Code
-export PATH=$PATH:$HOME/Code/bin
+export GOPATH=/root/code
+export PATH=$PATH:$HOME/code/bin
 
 # ----------------------------------------------------------------------------- #
 
