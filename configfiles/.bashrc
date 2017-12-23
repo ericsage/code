@@ -23,7 +23,7 @@ gb () {
   git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\n⑂ \1 /'
 }
 gl () {
-  git log --oneline -n 1 2> /dev/null | sed -e 's/\(.*\)/✎ \1 /'
+  git log --oneline -n 1 2> /dev/null | sed -e 's/\(.*\)/✎  \1 /'
 }
 HOURGLASS='⧖'
 COMPASS='✧'

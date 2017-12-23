@@ -2,6 +2,7 @@ autoconf
 automake
 bash
 bash-completion
+bind-tools
 binutils
 byacc
 ccache
