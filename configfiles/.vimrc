@@ -55,8 +55,13 @@ Plug 'mbbill/undotree'                       " Undo browser
 Plug 'vim-scripts/taglist.vim'               " ctag browser
 
 " ------------ COMPLETION AND SEARCH ------------ "
-Plug 'Shougo/neocomplete.vim'                " Autocomplete
-Plug 'Shougo/neoinclude.vim'                 " Include header info in autocomplete
+Plug 'Shougo/deoplete.nvim'                  " Autocomple engine
+Plug 'Shougo/neoinclude.vim'                 " Autocomple from headers
+Plug 'zchee/deoplete-go', { 'do': 'make'}    " Autocomple for Go
+Plug 'zchee/deoplete-clang'                  " Autocomple for C/C++
+Plug 'zchee/deoplete-jedi'                   " Autocomple for Python
+Plug 'roxma/nvim-yarp'                       " Deoplete dependency
+Plug 'roxma/vim-hug-neovim-rpc'              " Deoplete dependency
 Plug 'SirVer/ultisnips'                      " Snippet support
 Plug 'honza/vim-snippets'                    " Snippet library
 Plug 'junegunn/fzf.vim'                      " Fuzzy finder
@@ -64,7 +69,7 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 
 " ----------- SYNTAX AND LINT SUPPORT ----------- "
 Plug 'w0rp/ale'                              " Async linting for many languages
-Plug 'elzr/vim-json'                         " JSON syntax support
+Plug 'elzr/vim-json'                         " JSON syntax support Plug
 Plug 'pangloss/vim-javascript'               " Better Javascript syntax support
 Plug 'mxw/vim-jsx'                           " JSX support for Javascript
 Plug 'elixir-lang/vim-elixir'                " Elixir IDE support
@@ -248,7 +253,9 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#ale#enabled = 1
 
 " ---------------- NEOCOMPLETE ----------------- "
-let g:neocomplete#enable_at_startup = 1
+let g:deoplete#enable_at_startup = 1
+let g:deoplete#sources#clang#libclang_path = "/usr/lib/libclang.so"
+let g:deoplete#sources#clang#clang_header = "/usr/lib/clang"
 
 " ------------------- JEDI --------------------- "
 autocmd FileType python setlocal omnifunc=jedi#completions
@@ -384,9 +391,6 @@ endfunction
 
 colorscheme default
 
-
 call SyntaxOn()
 
 " ----------------------------------------------------------------------------- "
-"
-

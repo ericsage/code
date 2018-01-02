@@ -1,6 +1,7 @@
 awscli
 docker-compose
 jedi
+neovim
 pip
 setuptools
 twine

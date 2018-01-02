@@ -28,7 +28,7 @@
 [core]
     editor = vim                    # Use vim as the default editor
     pager = less -x4                # Page files uses less, set tab spots at multiples of 4
-    excludesfile = /root/.gitignore # Set global ignore file
+    excludesfile = $HOME/.gitignore # Set global ignore file
 
 [push]
     default = simple                # Find and push only to the same branch on the remote

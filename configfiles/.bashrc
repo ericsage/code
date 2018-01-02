@@ -158,6 +158,7 @@ httpDebug () {
 # -> GENERAL <- #
 export LANG=en_US.UTF-8
 export PATH=$PATH:$HOME/Code/bin
+export SAGE=$PATH/Code/src/github.com/ericsage
 
 # -> GO <- #
 export GOPATH=$HOME/Code

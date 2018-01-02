@@ -6,6 +6,8 @@ bind-tools
 binutils
 byacc
 ccache
+clang
+clang-dev
 cmake
 ctags
 curl
