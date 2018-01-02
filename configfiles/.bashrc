@@ -22,39 +22,46 @@
 gb () {
   git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\n⑂ \1 /'
 }
+
 gl () {
-  git log --oneline -n 1 2> /dev/null | sed -e 's/\(.*\)/✎  \1 /'
+  git log --oneline -n 1 2> /dev/null | sed -e 's/\(.*\)/✎ \1 /'
 }
+
 HOURGLASS='⧖'
 COMPASS='✧'
-export PS1="\n\[$HOURGLASS\] \t \[$COMPASS\] \w \$(gb)\$(gl)\n \! > "
+
+PS1="\[$HOURGLASS\] \t \[$COMPASS\] \w \$(gb)\$(gl)\n \! > "
 
 # ----------------------------------------------------------------------------- #
 # -------------------------------- C O N F I G -------------------------------- #
 # ----------------------------------------------------------------------------- #
 
-export LANG=en_US.UTF-8 # Set Locale
-set -o vi               # Turn vi mode on
+# -> EDITING <- #
+set -o vi       # Turn vi mode on
+
+# -> OPTIONS <- #
+shopt -s autocd # Cd when command is a path
+
+# -> HISTORY <- #
+HISTSIZE=       # Save every command in the history list
+HISTFILESIZE=   # Never truncate the history list
 
 # ----------------------------------------------------------------------------- #
 # -------------------------------- L A Y O U T -------------------------------- #
 # ----------------------------------------------------------------------------- #
 
-# -> HOME <- #
-mkdir -p ~/documents
-mkdir -p ~/downloads
-mkdir -p ~/pictures
-mkdir -p ~/videos
-mkdir -p ~/music
-mkdir -p ~/graphics
-mkdir -p ~/code/pkg
-mkdir -p ~/code/bin
-mkdir -p ~/code/src/github.com/ericsage
+# -> COMMON <- #
+mkdir -p $HOME/{Pictures,Videos,Music,Graphics,Downloads,Documents}
+
+# -> DEVELOPMENT <- #
+mkdir -p $HOME/Code/{pkg,bin,src}
+mkdir -p $HOME/Code/src/github.com/ericsage
+
+# -> SECRETS <-#
+mkdir -p $HOME/.secrets/keys
 
 # -> VIM <-#
-mkdir -p ~/.vim/backup
-mkdir -p ~/.vim/tmp
-mkdir -p ~/.vim/undo
+mkdir -p $HOME/.vim/{backup,tmp,undo}
 
 # ----------------------------------------------------------------------------- #
 # ------------------------------- A L I A S E S ------------------------------- #
@@ -65,33 +72,27 @@ alias ~='cd ~'
 alias ..='cd ../'
 alias ...='cd ../../'
 
-alias doc='cd ~/documents'
-alias documents='cd ~/documents'
+alias doc='cd ~/Documents'
+alias dow='cd ~/Downloads'
+alias pic='cd ~/Pictures'
+alias vid='cd ~/Videos'
+alias mus='cd ~/Music'
+alias gra='cd ~/Graphics'
 
-alias dow='cd ~/downloads'
-alias downloads='cd ~/downloads'
+alias code='cd ~/Code/src'
+alias sage='cd ~/Code/src/github.com/ericsage'
 
-alias pic='cd ~/pictures'
-alias pictures='cd ~/pictures'
-
-alias vid='cd ~/videos'
-alias videos='cd ~/videos'
-
-alias mus='cd ~/music'
-alias music='cd ~/music'
-
-alias gra='cd ~/graphics'
-alias graphics='cd ~/graphics'
-
-alias c='cd ~/code/src/github.com/ericsage'
-alias code='cd ~/code/src/github.com/ericsage'
+alias keys='cd ~/.secrets/keys'
 
 # -> VIM <- #
 alias v='vim'
 alias vi='vim'
 
 # -> GIT <- #
-alias g="git"
+alias g='git'
+
+# -> HISTORY <- #
+alias hg='history | grep'
 
 # -> DOTFILES <- #
 alias evi='vim ~/.vimrc'
@@ -99,7 +100,7 @@ alias ebash='vim ~/.bash_rc'
 alias egit='vim ~/.gitconfig'
 
 # -> TMUX <- #
-alias t='tmux -u2'
+alias tm='tmux -u2'
 alias tmux='tmux -u2'
 alias tn='tmux new -s'
 alias ta='tmux attach -t'
@@ -116,7 +117,7 @@ alias dc='docker-compose'
 alias dm='docker-machine'
 
 # -> KUBERNETES <- #
-alias k='kubectl'
+alias ku='kubectl'
 
 # ----------------------------------------------------------------------------- #
 # ----------------------------- F U N C T I O N S ----------------------------- #
@@ -139,19 +140,35 @@ httpHeaders () { /usr/bin/curl -I -L $@ ; }
 
 # ----------------------------------------------- #
 # -> httpDebug: Download a web page and show info on what took time <- #
-httpDebug () { /usr/bin/curl $@ -o /dev/null -w "dns: %{time_namelookup} connect: %{time_connect} pretransfer: %{time_pretransfer} starttransfer: %{time_starttransfer} total: %{time_total}\n" ; }
+httpDebug () {
+  /usr/bin/curl $@ -o /dev/null -w "
+  dns: %{time_namelookup}
+  connect: %{time_connect}
+  pretransfer: %{time_pretransfer}
+  starttransfer: %{time_starttransfer}
+  total: %{time_total}\n
+  " ;
+}
 # ----------------------------------------------- #
 
 # ----------------------------------------------------------------------------- #
 # ------------------------------- E X P O R T S ------------------------------- #
 # ----------------------------------------------------------------------------- #
 
+# -> GENERAL <- #
+export LANG=en_US.UTF-8
+export PATH=$PATH:$HOME/Code/bin
+
+# -> GO <- #
+export GOPATH=$HOME/Code
+
+# -> LESS <- #
 export LESS='R'
+
+# -> FZF <- #
 export FZF_DEFAULT_COMMAND='ag -g ""'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_CTRL_T_OPTS="--preview '(highlight -O ansi -l {} 2> /dev/null || cat {} || tree -C {}) 2> /dev/null | head -200'"
-export GOPATH=/root/code
-export PATH=$PATH:$HOME/code/bin
 
 # ----------------------------------------------------------------------------- #
 

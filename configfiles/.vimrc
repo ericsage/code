@@ -70,7 +70,7 @@ Plug 'mxw/vim-jsx'                           " JSX support for Javascript
 Plug 'elixir-lang/vim-elixir'                " Elixir IDE support
 Plug 'davidhalter/jedi-vim'                  " Python IDE support
 Plug 'rust-lang/rust.vim'                    " Rust IDE support
-Plug 'fatih/vim-go', { 'tag': 'v1.15' }      " Go IDE support
+Plug 'fatih/vim-go', { 'tag': 'v1.16' }      " Go IDE support
 
 call plug#end()
 

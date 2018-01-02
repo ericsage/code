@@ -39,6 +39,7 @@ protobuf
 python3
 python3-dev
 rtorrent
+stow
 strace
 sysstat
 tcpdump

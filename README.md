@@ -18,8 +18,8 @@ Sample Usage
 ------------
 ```bash
 docker run -it --name code \
--v ~/Documents/secrets/aws:/root/.aws \
--v ~/Documents/secrets/key:/root/.key \
+-v ~/Documents/.secrets/aws:/root/.aws \
+-v ~/Documents/.secrets/key:/root/.key \
 -v ~/Documents/code:/root/code/src \
 -v /var/run/docker.sock:/var/run/docker.sock \
 --security-opt seccomp:unconfined \
