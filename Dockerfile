@@ -46,10 +46,10 @@ vim -u NONE +'silent! source ~/.vimrc' +PlugInstall +qa! &> /dev/null
 WORKDIR $HOME/Code/src/github.com/ericsage
 
 # Add and symlink user configuration files
-COPY . ./$REPONAME
+COPY . $HOME/$REPONAME
 RUN \
 rm -f $HOME/.vimrc $HOME/.bashrc $HOME/.bash_profile && \
-cd ./$REPONAME && stow --target $HOME configfiles
+cd $HOME/$REPONAME && stow --target $HOME configfiles
 
 # Set the language encoding
 ENV LANG en_US.UTF-8
