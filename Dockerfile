@@ -2,7 +2,7 @@ FROM alpine:latest
 
 LABEL \
 maintainer="Eric Sage <eric.david.sage@gmail.com>" \ 
-epository="https://github.com/ericsage/code"
+repository="https://github.com/ericsage/code"
 
 # Dockerfile variables
 ENV \
@@ -12,11 +12,11 @@ GOPATH=/root/Code
 
 # Set and update package repositories
 COPY /repositories /etc/apk/repositories
-RUN apk upgrade --latest -q
+RUN apk update -q && apk upgrade --latest -q
 
 # Install system packages
 COPY /packages/apk $HOME/.packages/apk
-RUN apk update -q && apk add -q $(cat $HOME/.packages/apk)
+RUN apk add -q $(cat $HOME/.packages/apk)
 
 # Install python packages
 COPY /packages/pip $HOME/.packages/pip

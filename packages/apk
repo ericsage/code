@@ -32,6 +32,8 @@ libtool
 linux-headers
 ltrace
 make
+man
+man-pages
 nasm
 nmap
 nodejs-current

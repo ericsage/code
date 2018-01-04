@@ -84,6 +84,9 @@ alias sage='cd ~/Code/src/github.com/ericsage'
 
 alias keys='cd ~/.secrets/keys'
 
+# -> GNU <- #
+alias ls='ls -1'
+
 # -> VIM <- #
 alias v='vim'
 alias vi='vim'
