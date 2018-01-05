@@ -6,9 +6,10 @@ repository="https://github.com/ericsage/code"
 
 # Dockerfile variables
 ENV \
-REPONAME=code \
+REPONAME=port \
 HOME=/root \
-GOPATH=/root/Code
+GOPATH=/root/Code \
+LANG=en_US.UTF-8
 
 # Set and update package repositories
 COPY /repositories /etc/apk/repositories
@@ -46,13 +47,10 @@ vim -u NONE +'silent! source ~/.vimrc' +PlugInstall +qa! &> /dev/null
 WORKDIR $HOME/Code/src/github.com/ericsage
 
 # Add and symlink user configuration files
-COPY . $HOME/$REPONAME
+COPY . $HOME/Code/src/github.com/ericsage/$REPONAME
 RUN \
 rm -f $HOME/.vimrc $HOME/.bashrc $HOME/.bash_profile && \
-cd $HOME/$REPONAME && stow --target $HOME configfiles
-
-# Set the language encoding
-ENV LANG en_US.UTF-8
+cd $PWD/$REPONAME && stow --target $HOME configfiles
 
 # Set tmux as the starting process
 CMD [ "/usr/bin/tmux", "-2", "new-session", "-s", "main" ]
