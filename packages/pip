@@ -3,6 +3,7 @@ docker-compose
 jedi
 neovim
 pip
+pylint
 setuptools
 twine
 virtualenv

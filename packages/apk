@@ -36,7 +36,8 @@ man
 man-pages
 nasm
 nmap
-nodejs-current
+nodejs
+nodejs-npm
 patchutils
 pkgconfig
 protobuf
