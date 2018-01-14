@@ -9,7 +9,8 @@ ENV \
 REPONAME=port \
 HOME=/root \
 GOPATH=/root/Code \
-LANG=en_US.UTF-8
+LANG=en_US.UTF-8 \
+TZ=America/Los_Angeles
 
 # Set and update package repositories
 COPY /repositories /etc/apk/repositories
@@ -49,8 +50,11 @@ WORKDIR $HOME/Code/src/github.com/ericsage
 # Add and symlink user configuration files
 COPY . $HOME/Code/src/github.com/ericsage/$REPONAME
 RUN \
-rm -f $HOME/.vimrc $HOME/.bashrc $HOME/.bash_profile && \
-cd $PWD/$REPONAME && stow --target $HOME configfiles
+rm -f $HOME/.vimrc $HOME/.bashrc $HOME/.bash_profile && \ 
+touch ~/.stow-global-ignore && \
+cd $PWD/$REPONAME && stow --target $HOME configfiles && \
+rm ~/.stow-global-ignore
+
 
 # Set tmux as the starting process
 CMD [ "/usr/bin/tmux", "-2", "new-session", "-s", "main" ]
