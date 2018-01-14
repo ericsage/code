@@ -19,18 +19,24 @@
 # -------------------------------- P R O M P T -------------------------------- #
 # ----------------------------------------------------------------------------- #
 
-gb () {
-  git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\n⑂ \1 /'
+PROMPT_COMMAND=__prompt_command
+
+__prompt_command() {
+  local exit="$?"
+
+  local compass='✧'
+  local hourglass='⧖'
+  local success='⚐'
+  local failed='⚑'
+
+  PS1=""
+  PS1+="\[$hourglass\] \t \[$compass\] \w "
+  PS1+=$(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\n⑂ \1 /')
+  PS1+=$(git log --oneline -n 1 2> /dev/null | sed -e 's/\(.*\)/✎ \1 /')
+  PS1+="\n"
+  PS1+=$(if [ $exit -eq 0 ]; then echo $success; else echo "$failed"; fi)
+  PS1+=" \! -> "
 }
-
-gl () {
-  git log --oneline -n 1 2> /dev/null | sed -e 's/\(.*\)/✎ \1 /'
-}
-
-HOURGLASS='⧖'
-COMPASS='✧'
-
-PS1="\[$HOURGLASS\] \t \[$COMPASS\] \w \$(gb)\$(gl)\n \! > "
 
 # ----------------------------------------------------------------------------- #
 # -------------------------------- C O N F I G -------------------------------- #
