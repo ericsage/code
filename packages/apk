@@ -7,8 +7,7 @@ binutils
 byacc
 ccache
 clang
-clang-dev
-cmake
+clang-dev cmake
 ctags
 curl
 dnstop
@@ -38,6 +37,7 @@ nasm
 nmap
 nodejs
 nodejs-npm
+openssh
 patchutils
 pkgconfig
 protobuf
