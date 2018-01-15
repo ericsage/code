@@ -2,11 +2,11 @@ FROM alpine:latest
 
 LABEL \
 maintainer="Eric Sage <eric.david.sage@gmail.com>" \ 
-repository="https://github.com/ericsage/code"
+repository="https://github.com/ericsage/orca"
 
 # Dockerfile variables
 ENV \
-REPONAME=port \
+REPONAME=orca \
 HOME=/root \
 GOPATH=/root/Code \
 LANG=en_US.UTF-8 \
@@ -55,6 +55,5 @@ touch ~/.stow-global-ignore && \
 cd $PWD/$REPONAME && stow --target $HOME configfiles && \
 rm ~/.stow-global-ignore
 
-
 # Set tmux as the starting process
-CMD [ "/usr/bin/tmux", "-2", "new-session", "-s", "main" ]
+CMD /usr/bin/tmux -2 new-session -s ${REPONAME}
