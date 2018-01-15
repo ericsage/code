@@ -1,10 +1,7 @@
-
-PORT
+orca
 ====
-My development environment inside of a Docker container
+My containerized development environment 
  
-Anatomy
--------
 - [Alpine Linux](https://hub.docker.com/_/alpine/) base
 - [Vim plugins](https://github.com/ericsage/code/blob/master/configfiles/.vimrc#L27-L74)
 - [Alpine packages](https://github.com/ericsage/code/blob/master/packages/apk)
@@ -15,9 +12,10 @@ Usage
 -----
 ```bash
 docker run -it --name port \
--v ~/Documents/code:/root/code/src \
+-v ~/Documents/Code:/root/Code/src \
 -v ~/Documents/.secerets:/root/.secrets \
 -v /var/run/docker.sock:/var/run/docker.sock \
 --security-opt seccomp:unconfined \
+-p 8080:8080 \
 ericsage/port
 ```
