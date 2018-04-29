@@ -33,6 +33,7 @@ ltrace
 make
 man
 man-pages
+musl-dev
 nasm
 nmap
 nodejs

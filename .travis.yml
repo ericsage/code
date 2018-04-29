@@ -1,0 +1,13 @@
+sudo: required
+
+services:
+  - docker
+
+before_install:
+	- echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - docker build -t ericsage/orca:stable .
+  - docker build -t ericsage/orca:edge .
+
+script:
+	- docker push ericsage/orca:stable
+	- docker push ericsage/orca:edge
