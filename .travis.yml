@@ -1,13 +1,18 @@
 sudo: required
 
+language: generic
+
 services:
   - docker
 
 before_install:
+  - docker --version
 	- echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-  - docker build -t ericsage/orca:stable .
-  - docker build -t ericsage/orca:edge .
 
 script:
+  - docker build -t ericsage/orca:edge .
+  - docker build -t ericsage/orca:stable .
+
+after_success:
 	- docker push ericsage/orca:stable
 	- docker push ericsage/orca:edge
