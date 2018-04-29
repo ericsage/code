@@ -21,5 +21,3 @@ deploy:
   script:
     - docker push ericsage/orca:stable
     - docker push ericsage/orca:edge
-  on:
-branch: master
