@@ -29,16 +29,6 @@ COPY /packages/go $HOME/.packages/go
 RUN go get $(cat $HOME/.packages/go) && \
 $GOPATH/bin/gometalinter --install &> /dev/null
 
-# Install gcloud SDK and kubectl
-RUN \
-wget -q https://dl.google.com/dl/cloudsdk/channels/rapid/google-cloud-sdk.zip && \
-unzip -q google-cloud-sdk.zip -d /usr/lib && rm google-cloud-sdk.zip && \
-/usr/lib/google-cloud-sdk/install.sh \
- --quiet \
- --path-update=true \
- --bash-completion=true \
- --additional-components kubectl alpha beta &> /dev/null
-
 # Install vim plugins
 COPY /configfiles/.vimrc $HOME/.vimrc
 RUN \
