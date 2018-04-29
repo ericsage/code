@@ -8,6 +8,7 @@ before_script:
 
 script:
   - docker build -t ericsage/orca:edge .
+  - sed -i '/COPY \/repositories.*/d' Dockerfile
   - docker build -t ericsage/orca:stable .
 
 after_script:
@@ -19,6 +20,4 @@ before_deploy:
 deploy:
   skip_cleanup: true
   provider: script
-  script:
-    - docker push ericsage/orca:stable
-    - docker push ericsage/orca:edge
+  script: docker push ericsage/orca:edge && docker push ericsage/orca:stable
