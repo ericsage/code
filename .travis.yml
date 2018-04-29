@@ -1,18 +1,25 @@
 sudo: required
 
-language: generic
-
 services:
   - docker
 
-before_install:
+before_script:
   - docker --version
-	- echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
 
 script:
   - docker build -t ericsage/orca:edge .
   - docker build -t ericsage/orca:stable .
 
-after_success:
-	- docker push ericsage/orca:stable
-	- docker push ericsage/orca:edge
+after_script:
+  - docker images
+
+before_deploy:
+  - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
+
+deploy:
+  provider: script
+  script:
+    - docker push ericsage/orca:stable
+    - docker push ericsage/orca:edge
+  on:
+branch: master
