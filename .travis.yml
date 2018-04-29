@@ -17,7 +17,7 @@ before_deploy:
   - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
 
 deploy:
-  clean_up: false
+  skip_cleanup: true
   provider: script
   script:
     - docker push ericsage/orca:stable
