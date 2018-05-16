@@ -13,7 +13,7 @@ Usage
 ```bash
 docker run -it --name orca \
 -v ~/Documents/Code:/root/Code/src \
--v ~/Documents/.secerets:/root/.secrets \
+-v ~/Documents/.secrets:/root/.secrets \
 -v /var/run/docker.sock:/var/run/docker.sock \
 --security-opt seccomp:unconfined \
 -p 8080:8080 \
