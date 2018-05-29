@@ -3,16 +3,11 @@ sudo: required
 services:
   - docker
 
-before_script:
-  - docker --version
-
 script:
-  - docker build -t ericsage/orca:edge .
+  - docker build -f Dockerfile.ubuntu -t ericsage/orca:ubuntu .
+  - docker build -f Dockerfile.alpine -t  ericsage/orca:alpine-edge .
   - sed -i '/COPY \/repositories.*/d' Dockerfile
-  - docker build -t ericsage/orca:stable .
-
-after_script:
-  - docker images
+  - docker build -f Dockerfile.alpine -t ericsage/orca:alpine-stable .
 
 before_deploy:
   - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
@@ -20,4 +15,6 @@ before_deploy:
 deploy:
   skip_cleanup: true
   provider: script
-  script: docker push ericsage/orca:edge && docker push ericsage/orca:stable
+  script: docker push ericsage/orca:ubuntu &&
+          docker push ericsage/orca:alpine-edge &&
+          docker push ericsage/orca:alpine-stable

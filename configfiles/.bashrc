@@ -98,7 +98,7 @@ alias vi='vim'
 alias g='git'
 
 # -> HISTORY <- #
-alias hg='history | grep'
+alias gh='history | grep'
 
 # -> DOTFILES <- #
 alias evi='vim ~/.vimrc'
