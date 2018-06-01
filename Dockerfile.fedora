@@ -1,4 +1,4 @@
-FROM ubuntu:latest
+FROM fedora:latest
 
 LABEL \
 maintainer="Eric Sage <eric.david.sage@gmail.com>" \ 
@@ -15,14 +15,12 @@ LANGUAGE=C.UTF-8 \
 LC_ALL=C.UTF-8 \
 TZ=America/Los_Angeles
 
-# Update package repositories
-RUN apt-get -qq update && apt-get -qq install man-db
-
-# Update and install system packages
-COPY /packages/apt $HOME/.packages/apt
-RUN DEBIAN_FRONTEND="noninteractive" \
-apt-get -qq upgrade && \
-apt-get -qq install $(cat $HOME/.packages/apt)
+# Install system packages
+COPY /packages/yum $HOME/.packages/yum
+RUN \
+dnf update -qy && \
+dnf install --nodoc -y $(cat $HOME/.packages/yum) && \
+dnf clean all
 
 # Install python packages
 COPY /packages/pip $HOME/.packages/pip
@@ -36,8 +34,7 @@ $GOPATH/bin/gometalinter --install &> /dev/null
 # Install vim plugins
 COPY /configfiles/.vimrc $HOME/.vimrc
 RUN \
-vim -u NONE +'silent! source ~/.vimrc' +PlugInstall +qa!
-# &> /dev/null
+vim -u NONE +'silent! source ~/.vimrc' +PlugInstall +qa! &> /dev/null
 
 # Set the initial directory
 WORKDIR $HOME/Code/src/github.com/ericsage
