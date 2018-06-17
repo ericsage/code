@@ -26,19 +26,19 @@
 # ----------------------------------- #
 
 [core]
-    # > Use vim as the default editor
+  # > Use vim as the default editor
   editor = vim
-    # > Page files uses less, set tab spots at multiples of 4
+  # > Page files uses less, set tab spots at multiples of 4
   pager = less -x4
-    # > Set global ignore file
+  # > Set global ignore file
   excludesfile = $HOME/.gitignore
 
 [push]
-    # > Find and push only to the same branch on the remote
+  # > Find and push only to the same branch on the remote
   default = simple
 
 [http]
-    # > Don't verify https connections
+  # > Don't verify https connections
   sslVerify = false
 
 # ----------------------------------- #
@@ -58,9 +58,9 @@
 
 # ----> COMMAND <---- #
 [alias]
-    # > Output all aliases
+  # > Output all aliases
   forgot = "!git config -l | grep alias | cut -c 7-"
-    # > Files different from master on current branch
+  # > Files different from master on current branch
   fdm = !git diff origin/master... --name-status
   cp = cherry-pick
   st = status -s
