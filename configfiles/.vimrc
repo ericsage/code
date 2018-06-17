@@ -1,341 +1,370 @@
-" ----------------------------------------------------------------------------- "
-" ---V--------------V--- SSSSSSS AAAAAAA GGGGGGG EEEEEEE ---V--------------V--- "
-" ---------------------- S       A     A G       E       ---------------------- "
-" ---I--------------I--- SSSSSSS AAAAAAA GGGGGGG EEEEEEE ---I--------------I--- "
-" ----------------------       S A     A G     G E       ---------------------- "
-" ---M--------------M--- SSSSSSS A     A GGGGGGG EEEEEEE ---M--------------M--- "
-" ----------------------------------------------------------------------------- "
+" ----------------------------------------------------------------- "
+" -V----------V--- SSSSSSS AAAAAAA GGGGGGG EEEEEEE ---V----------V- "
+" ---------------- S       A     A G       E       ---------------- "
+" -I----------I--- SSSSSSS AAAAAAA GGGGGGG EEEEEEE ---I----------I- "
+" ----------------       S A     A G     G E       ---------------- "
+" -M----------M--- SSSSSSS A     A GGGGGGG EEEEEEE ---M----------M- "
+" ----------------------------------------------------------------- "
 
-" ------ CONTENTS ------ #
+" ----> CONTENTS <---- "
 " 1. Plugins
 " 2. Settings
 " 3. Mappings
-" 5. Plugin Customizations
-" 6. Functions
-" 7. Colorscheme
-" -----------------------#
+" 4. Language Specifics
+" 6. Plugin Customizations
+" 5. Functions
+" 6. Colorscheme
+" -------------------- "
 
-" ----------------------------------------------------------------------------- "
-" ------------------------------- P L U G I N S ------------------------------- "
-" ----------------------------------------------------------------------------- "
-" ------------------------------- AUTOINSTALLER ------------------------------- "
+" ----------------------------------- "
+" ---------> P L U G I N S <--------- "
+" ----------------------------------- "
+
 if empty(glob('~/.vim/autoload/plug.vim'))
   silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   autocmd VimEnter * PlugInstall
 endif
-" ------------------------------------------------------------------------------ "
+
+" ----------------------------------- "
 
 call plug#begin('~/.vim/plugged')
 
-" --------------- UTILITY WRAPPER --------------- "
-Plug 'tpope/vim-fugitive'                    " Wrap git commands
-Plug 'tpope/vim-eunuch'                      " Wrap shell commands
+" ----> STARTUP <---- "
+" > Reopen files at the last edit position
+Plug 'farmergreg/vim-lastplace'
+" > Custom start screen with file picker
+Plug 'mhinz/vim-startify'
 
-" ------------------- EDITING ------------------- "
-Plug 'scrooloose/nerdcommenter'              " Edit/create comments
-Plug 'tpope/vim-surround'                    " Edit/create wrapping text
+" ----> APPEARANCE <---- "
+" > Marks and removes all trailing spaces
+Plug 'ntpeters/vim-better-whitespace'
+" > Show fancy indent markers
+Plug 'nathanaelkane/vim-indent-guides'
 
-" ------------------- CURSORS ------------------- "
-Plug 'justinmk/vim-sneak'                    " Extra vim motion commands
-Plug 'terryma/vim-multiple-cursors'          " Multiple cursors, Ctrl-n will place cursors at word repetitions
-Plug 'farmergreg/vim-lastplace'              " Reopen files at the last edit position
+" ----> STATUS LINE <---- "
+" > Customizes the status line
+Plug 'vim-airline/vim-airline'
+" > Show buffers bar
+Plug 'bling/vim-bufferline'
 
-" ---------------- UI APPEARANCE ---------------- "
-Plug 'mhinz/vim-startify'                    " Custom start screen with file picker
-Plug 'mhinz/vim-signify'                     " Adds VCS markings in the gutter
-Plug 'bronson/vim-trailing-whitespace'       " Marks and removes all trailing spaces
-Plug 'nathanaelkane/vim-indent-guides'       " Show fancy indent markers
-Plug 'vim-airline/vim-airline'               " Customizes the status line
+" ----> BROWSERS <---- "
+" > File browser
+Plug 'scrooloose/nerdtree'
+" > Tag browser
+Plug 'majutsushi/tagbar'
+" > Undo browser
+Plug 'mbbill/undotree'
 
-" ------------------- BROWSER ------------------- "
-Plug 'scrooloose/nerdtree'                   " File browser
-Plug 'Xuyuanp/nerdtree-git-plugin'           " Git markings for nerdtree
-Plug 'majutsushi/tagbar'                     " Tag browser
-Plug 'mbbill/undotree'                       " Undo browser
-Plug 'vim-scripts/taglist.vim'               " ctag browser
+" ----> VERSION CONTROL <---- "
+" > Adds VCS markings in the gutter
+Plug 'mhinz/vim-signify'
+" > Git markings for nerdtree
+Plug 'Xuyuanp/nerdtree-git-plugin'
+" > Mercurial markings for nerdtree
+Plug 'f4t-t0ny/nerdtree-hg-plugin'
 
-" ------------ COMPLETION AND SEARCH ------------ "
-Plug 'Shougo/deoplete.nvim'                  " Autocomple engine
-Plug 'Shougo/neoinclude.vim'                 " Autocomple from headers
-Plug 'zchee/deoplete-go', { 'do': 'make'}    " Autocomple for Go
-Plug 'zchee/deoplete-clang'                  " Autocomple for C/C++
-Plug 'zchee/deoplete-jedi'                   " Autocomple for Python
-Plug 'roxma/nvim-yarp'                       " Deoplete dependency
-Plug 'roxma/vim-hug-neovim-rpc'              " Deoplete dependency
-Plug 'SirVer/ultisnips'                      " Snippet support
-Plug 'honza/vim-snippets'                    " Snippet library
-Plug 'junegunn/fzf.vim'                      " Fuzzy finder
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+" ----> LINTING <---- "
+" > Multilingual Linter
+Plug 'w0rp/ale'
+" > Autoformater
+Plug 'Chiel92/vim-autoformat'
 
-" ----------- SYNTAX AND LINT SUPPORT ----------- "
-Plug 'w0rp/ale'                              " Async linting for many languages
-Plug 'elzr/vim-json'                         " JSON syntax support Plug
-Plug 'pangloss/vim-javascript'               " Better Javascript syntax support
-Plug 'mxw/vim-jsx'                           " JSX support for Javascript
-Plug 'elixir-lang/vim-elixir'                " Elixir IDE support
-Plug 'davidhalter/jedi-vim'                  " Python IDE support
-Plug 'rust-lang/rust.vim'                    " Rust IDE support
-Plug 'fatih/vim-go', { 'tag': 'v1.16' }      " Go IDE support
+" ----> SEACRCH <---- "
+" > Fuzzy finder
+Plug 'junegunn/fzf.vim'
+Plug 'junegunn/fzf',
+      \  { 'dir': '~/.fzf', 'do': './install --all' }
+
+" ----> LANGUAGE SERVER CLIENT <---- "
+" > Dependancy for vim-lsp
+Plug 'prabirshrestha/async.vim'                                                     
+" > Core langugage server client
+Plug 'prabirshrestha/vim-lsp'                                                       
+" > Multilingual autocomplete
+Plug 'prabirshrestha/asyncomplete.vim'                                              
+" > Hook autocomplete into language server client
+Plug 'prabirshrestha/asyncomplete-lsp.vim'  
 
 call plug#end()
 
-" ----------------------------------------------------------------------------- "
-" ------------------------------ S E T T I N G S ------------------------------ "
-" ----------------------------------------------------------------------------- "
+" ------------------------------------- "
+" ---------> S E T T I N G S <--------- "
+" ------------------------------------- "
 
-" ---------------- COMPATABILITY ---------------- "
-set nocompatible                     " Turn vi compatability mode off
+" ----> COMPATABILITY <---- "
+" > Turn vi compatability mode off
+set nocompatible
 
-" ------------------- INDENTS ------------------- "
-filetype plugin indent on             " Indent using filetype files if they exist/end Vundle
-set autoindent                        " Copy the indentation from the previous line
-set smartindent                       " Insert an extra indent level in some cases
+" ----> INDENTS <---- "
+" > Indent using filetype files if they exist/end Vundle
+filetype plugin indent on
+" > Copy the indentation from the previous line
+set autoindent
+" > Insert an extra indent level in some cases
+set smartindent
 
-" ------------------ INTERFACE ------------------ "
-syntax off                            " Do not display syntax highlighting
-set shortmess=I                       " Hide the intro message
-set number                            " Show line numbers
-set numberwidth=2                     " Use at least two columns to display line numbers
-set colorcolumn=80                    " Add a marker at column 80
+" ----> INTERFACE <---- "
+" > Do not display syntax highlighting
+syntax off
+" > Hide the intro message
+set shortmess=I
+" > Show line numbers
+set number
+" > Use at least two columns to display line numbers
+set numberwidth=2
 
-" ----------------- STATUS LINE ----------------- "
-set ruler                             " Show line number on status line
-set laststatus=2                      " Use two rows to display the status line
+" ----> STATUS LINE <---- "
+" > Show line number on status line
+set ruler
+" > Use two rows to display the status line
+set laststatus=2
 
-" ---------------- FILE WATCHING ---------------- "
-set autoread                          " Reread the file when an external change is detected
-set autowrite                         " Write the file when a buffer switch occurs
+" ----> FILE WATCHING <---- "
+" > Reread the file when an external change is detected
+set autoread
+" > Write the file when a buffer switch occurs
+set autowrite
 
-" ------------------ WINDOWING ------------------ "
-set splitbelow                        " Create horizontal splits below the current window
-set splitright                        " Create vertical splits to the right of the current window
+" ----> WINDOWING <---- "
+" > Create horizontal splits below the current window
+set splitbelow
+" > Create vertical splits to the right of the current window
+set splitright
 
-" ------------------- CURSORS ------------------- "
-set scrolloff=5                       " The number of lines kept above and below the cursor
-set scrolljump=5                      " The number of lines to scroll at a time
-autocmd InsertEnter * set cursorline  " Highlight line with cursor in insert mode
-autocmd InsertLeave * set cursorline& " Remove cursor line highlight in command mode
+" ----> CURSORS <---- "
+" > The number of lines kept above and below the cursor
+set scrolloff=5
+" > The number of lines to scroll at a time
+set scrolljump=5
+" > Highlight line with cursor in insert mode
+autocmd InsertEnter * set cursorline
+" > Remove cursor line highlight in command mode
+autocmd InsertLeave * set cursorline&
 
-" ------------------- COMMANDS ------------------ "
-set showcmd                           " Show partial commands as they are typed
-set wildmenu                          " Show a completion menu for commands with Tab
-set wildmode=longest:full             " Always choose the longest match for the completion menu
+" ----> COMMANDS <---- "
+" > Show partial commands as they are typed
+set showcmd
+" > Show a completion menu for commands with Tab
+set wildmenu
+" > Always choose the longest match for the completion menu
+set wildmode=longest:full
 
-" ------------- DELIMITERS MATCHING ------------- "
-set showmatch                         " Briefly move the cursor to the matching brace when insertings a brace
-set matchtime=1                       " Move the cursor to the matched braced for a tenth of a second
+" ----> DELIMITERS MATCHING <---- "
+" Briefly move the cursor to the matching brace when insertings a brace
+set showmatch
+" Move the cursor to the matched braced for a tenth of a second
+set matchtime=1
 
-" ----------------- INDENTATION ----------------- "
-set shiftwidth=2                      " Insert two spaces of indentation with reindent (>> <<)
-set expandtab                         " Insert spaces when the Tab key is pressed
-set tabstop=2                         " Insert two spaces when the Tab key is pressed
+" ----> INDENTATION <---- "
+" > Insert two spaces of indentation with reindent (>> <<)
+set shiftwidth=2
+" > Insert spaces when the Tab key is pressed
+set expandtab
+" > Insert two spaces when the Tab key is pressed
+set tabstop=2
 
-" ------------------- FOLDING ------------------- "
-set foldmethod=syntax                 " Sets folds using the folding method defined in the current filetype syntax file
-set foldlevelstart=20                 " Make all folds closed when a file is opened
+" ----> FOLDING <---- "
+" > Sets folds using the method defined in the current filetype syntax file
+set foldmethod=syntax
+" > Make all folds closed when a file is opened
+set foldlevelstart=20
 
-" ------------------- ENCODING ------------------ "
-set encoding=utf-8                    " Set vim's default encoding to utf-8
-set fileencoding=utf-8                " Set the default encoding of files to utf-8
+" ----> ENCODING <---- "
+" > Set vim's default encoding to utf-8
+set encoding=utf-8
+" > Set the default encoding of files to utf-8
+set fileencoding=utf-8
 
-" --------------- KEYMAPS OPTIONS --------------- "
-set ttimeout                          " Time out on key codes
-set ttimeoutlen=100                   " The time in milliseconds that is waited for a key code sequence to complete
+" ----> KEYMAPS OPTIONS <---- "
+" > Time out on key codes
+set ttimeout
+" > The time in milliseconds that is waited for a key code sequence to complete
+set ttimeoutlen=100
 
-" ------------------ SEARCHING ------------------ "
-set hlsearch                          " Highlight all matches for a previous search pattern
-set incsearch                         " Search as characters are entered
-set ignorecase                        " Ignore the case of normal letters when searching
-set smartcase                         " Ignore case when the pattern contains lowercase letters only
-set complete-=i                       " When completing a name (<C-n> <C-p>), sna current and included file for matches
-set completeopt=menu                  " Show a menu when completing a name when there is more than one match.
+" ----> SEARCHING <---- "
+" > Highlight all matches for a previous search pattern
+set hlsearch
+" > Search as characters are entered
+set incsearch
+" > Ignore the case of normal letters when searching
+set ignorecase
+" > Ignore case when the pattern contains lowercase letters only
+set smartcase
+" > When completing a name (<C-n> <C-p>), match with current and included file
+set complete-=i
+" > Show a menu when completing a name when there is more than one match
+set completeopt=menu
 
-" ---------------- UTILITY FILES ---------------- "
-set backup                            " Create a backup of any opened files, overwriting any old backups
-set backupdir=~/.vim/backup//         " Backup files location, use complete path as backup file name (//)
-set directory=~/.vim/tmp//            " Swap files location, use complete path as swap file name (//)
-set undodir=~/.vim/undo//             " Undo files location, use complete path as undo file name (//)
-set undofile                          " Keep a history of undos
+" ----> UTILITY FILES <---- "
+" > Create a backup of any opened files, overwriting any old backups
+set backup
+" > Backup files location, use complete path as backup file name (//)
+set backupdir=~/.vim/backup//
+" > Swap files location, use complete path as swap file name (//)
+set directory=~/.vim/tmp//
+" > Undo files location, use complete path as undo file name (//)
+set undodir=~/.vim/undo//
+" > Keep a history of undos
+set undofile
 
-" ------------------ FILETYPES ------------------ "
-filetype on                           " Enable filetype detection
-filetype indent on                    " Enable filetype-specific indenting
-filetype plugin on                    " Enable filetype-specific plugins
+" ----> FILETYPES <---- "
+" > Enable filetype detection
+filetype on
+" > Enable filetype-specific indenting
+filetype indent on
+" > Enable filetype-specific plugins
+filetype plugin on
 
-" ------------------- GOLANG -------------------- "
-au FileType go set shiftwidth=4
-au FileType go set softtabstop=4
-au FileType go set tabstop=4
+" ------------------------------------- "
+" ---------> M A P P I N G S <--------- "
+" ------------------------------------- "
 
-" ----------------------------------------------------------------------------- "
-" ------------------------------ M A P P I N G S ------------------------------ "
-" ----------------------------------------------------------------------------- "
-
-" ------------------- COMMAND ------------------- "
-" Use ; as :
+" ----> COMMAND <---- "
+" > Use ; as :
 nnoremap ; :
 
-" ----------------- LEADER KEYS ----------------- "
-" Use comma as the leader and local leader
+" ----> LEADER KEYS <---- "
+" > Use comma as the leader and local leader
 let mapleader = ","
 let g:mapleader = ","
 let maplocalleader = ","
 let g:maplocalleader = ","
 
-" ---------------- QUICK ACCESS ----------------- "
-" Edit vimrc
-:nnoremap <leader>ev :vsplit $MYVIMRC<cr>
-" Reload vimrc
-:nnoremap <leader>sv :source $MYVIMRC<cr>
+" ----> QUICK ACCESS <---- "
+" > Edit vimrc
+:nnoremap <leader>ev :vsplit $MYVIMRC<CR>
+" > Reload vimrc
+:nnoremap <leader>sv :source $MYVIMRC<CR>
 
-" ------------------ WINDOWING ------------------ "
-" Use movement keys to jump between windows
+" ----> WINDOWING <---- "
+" > Use movement keys to jump between windows
 map <C-j> <C-W>j
 map <C-k> <C-W>k
 map <C-h> <C-W>h
 map <C-l> <C-W>l
 
-" -------------------- REDOS -------------------- "
-" Undo a redo with U
-nnoremap U :redo<cr>
+" ----> REDOS <---- "
+" > Undo a redo with U
+nnoremap U :redo<CR>
 
-" ---------------- ABBREVIATIONS ---------------- "
-" Shortcuts for viewing registers and buffers
+" ----> ABBREVIATIONS <---- "
+" > Shortcuts for viewing registers and buffers
 command Reg registers
 command Buf buffers
 
-" -------------------- PASTE -------------------- "
-nnoremap <leader>p :set paste<cr>
-nnoremap <leader>np :set nopaste<cr>
+" ----> PASTE <---- "
+nnoremap <leader>p :set paste<CR>
+nnoremap <leader>np :set nopaste<CR>
 
-" ---------------- OPEN DRAWERS ----------------- "
-" Open Nerdree with Ctrl-\
-nmap <silent> <C-\> :NERDTreeToggle<CR>
-" Open TList with Ctrl-]
-nmap <silent> <C-]> :TlistToggle<CR>
+" ----> OPEN DRAWERS <---- "
+" > Open Nerdree drawer with Ctrl-\
+nnoremap <silent> <C-\> :NERDTreeToggle<CR>
+" > Open Tagbar drawer with Ctrl-]
+nnoremap <silent> <C-]> :TagbarToggle<CR>
+" > Open Undotree drawer with Ctrl-[
+nnoremap <silent> <C-J> :UndotreeToggle<CR>
 
-" ------------------- FINDING ------------------- "
-"Search files in git
+" ----> FINDING <---- "
+" > Search files in git
 nnoremap <C-f> :GFiles<CR>
-"Search all files
+" > Search all files
 nnoremap <leader>fa :Files<CR>
-"Search lines in all open buffers
+" > Search lines in all open buffers
 nnoremap <leader>fl :Lines<CR>
-"Search command history
+" > Search command history
 nnoremap <leader>fc :History:<CR>
-"Search search history
+" > Search search history
 nnoremap <leader>fs :History/<CR>
-"Search key mappings
-nnoremap <leader>fm :Maps<CR>
+" > Search key mappings
+noremap <leader>fm :Maps<CR>
 
-" ------------------ SEARCHING ------------------ "
-"Clear the search highlighting
-nnoremap <C-s> :nohlsearch<cr>
+" ----> SEARCHING <---- "
+" > Clear the search highlighting
+nnoremap <silent> . :nohlsearch<CR>
 
-" ----------------------------------------------------------------------------- "
-" ----------------- P L U G I N   C U S T O M I Z A T I O N S ----------------- "
-" ----------------------------------------------------------------------------- "
+" ------------------------------------------------------ "
+" ---------> L A N G U A G E  S P E C F I C S <--------- "
+" ------------------------------------------------------ "
 
-" ------------------ STARTIFY ------------------ "
+" ----> PYTHON <---- "
+au BufNewFile,BufRead *.py
+      \ set tabstop=4       |
+      \ set softtabstop=4   |
+      \ set shiftwidth=4    |
+      \ set textwidth=79    |
+      \ set expandtab       |
+      \ set autoindent      |
+      \ set fileformat=unix |
+
+let g:formatter_yapf_style = 'facebook'
+
+if executable('pyls')
+      au User lsp_setup call lsp#register_server({
+             \ 'name': 'pyls',
+             \ 'cmd': {server_info->['pyls']},
+             \ 'whitelist': ['python'],
+             \ })
+endif
+
+" --------------------------------------------------------------- "
+" ---------> P L U G I N   C U S T O M I Z A T I O N S <--------- "
+" --------------------------------------------------------------- "
+
+" ----> STARTIFY <---- "
 let g:startify_bookmarks = [ '~/.vimrc', '~/.bashrc', '~/.tmux.conf' ]
 let g:startify_custom_header = [
-      \ " ----------------------------------------------------------------------------- ",
-      \ " ---V--------------V--- SSSSSSS AAAAAAA GGGGGGG EEEEEEE ---V--------------V--- ",
-      \ " ---------------------- S       A     A G       E       ---------------------- ",
-      \ " ---I--------------I--- SSSSSSS AAAAAAA GGGGGGG EEEEEEE ---I--------------I--- ",
-      \ " ----------------------       S A     A G     G E       ---------------------- ",
-      \ " ---M--------------M--- SSSSSSS A     A GGGGGGG EEEEEEE ---M--------------M--- ",
-      \ " ----------------------------------------------------------------------------- ",
+      \ " ----------------------------------------------------------------- ",
+      \ " -V----------V--- SSSSSSS AAAAAAA GGGGGGG EEEEEEE ---V----------V- ",
+      \ " ---------------- S       A     A G       E       ---------------- ",
+      \ " -I----------I--- SSSSSSS AAAAAAA GGGGGGG EEEEEEE ---I----------I- ",
+      \ " ----------------       S A     A G     G E       ---------------- ",
+      \ " -M----------M--- SSSSSSS A     A GGGGGGG EEEEEEE ---M----------M- ",
+      \ " ----------------------------------------------------------------- ",
       \ ]
 
-" ------------------ AIRLINE ------------------- "
+" ----> AIRLINE <---- "
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#ale#enabled = 1
+let g:airline#extensions#bufferline#enabled = 0
 
-" ---------------- NEOCOMPLETE ----------------- "
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#sources#clang#libclang_path = "/usr/lib/libclang.so"
-let g:deoplete#sources#clang#clang_header = "/usr/lib/clang"
-
-" ------------------- JEDI --------------------- "
-autocmd FileType python setlocal omnifunc=jedi#completions
-let g:jedi#completions_enabled = 0
-let g:jedi#auto_vim_configuration = 0
-let g:jedi#smart_auto_mappings = 0
-
-" -------------------- ALE --------------------- "
+" ----> ALE <---- "
 let g:ale_sign_column_always = 1
 let g:ale_lint_delay = 1000
+let g:ale_fix_on_save = 1
 
-" ----------------- UTILSNIPS ------------------ "
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<leader>pt"
-let g:UltiSnipsJumpBackwardTrigger="<leader>nt"
+" ----> NERDTREE <---- "
+:let g:NERDTreeWinSize = 50
 
-" ------------------ VIM-GO -------------------- "
-autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=4 shiftwidth=4
-" Automatically show the type info of the token under the cusor
-let g:go_auto_type_info = 1
-" When adding tags to structs, use snackcase for each tag
-let g:go_addtags_transform = "snakecase"
-" Use goimports instead of fmt
-let g:go_fmt_command = "goimports"
-" Run the metalinter on save
-let g:go_metalinter_autosave = 1
-" Calls `go run` for the current main package
-au FileType go nmap <C-g> <Plug>(go-run)
-" Calls `go test` for the current main package
-au FileType go nmap <C-t> <Plug>(go-test)
-" Calls `go build` for the current main package
-au FileType go nmap <C-c> <Plug>(go-build)
-" Calls `go install` for the current main package
-au FileType go nmap <C-i> <Plug>(go-install)
-" Rename the identifier under the cursor to the desired new name
-au FileType go nmap <C-r> <Plug>(go-rename)
-" Alternates between the implementation and test code in the current window
-au FileType go nmap <C-a> <Plug>(go-alternate-edit)
-" Calls go test -coverprofile-temp.out or clears the annotation like a toggle
-au FileType go nmap <C-m> <Plug>(go-coverage-toggle)
-" Show the interfaces that the type under the cursor implements
-au FileType go nmap <Leader>m <Plug>(go-implements)
-" Calls `go test -run '...'` for the test function immediate to cursor
-au FileType go nmap <Leader>t <Plug>(go-test-func)
-" Shows type information for the word under the cursor
-au FileType go nmap <Leader>i <Plug>(go-info)
-" Show path from callgraph root to selected function
-au FileType go nmap <Leader>cs <Plug>(go-callstack)
-" Show the call targets for the type under the cursor
-au FileType go nmap <leader>ce <Plug>(go-callees)
-" Show possible callers of the selected function
-au FileType go nmap <leader>cr <Plug>(go-callers)
-" Show send/receive corresponding to selected channel op
-au FileType go nmap <leader>ch <Plug>(go-channelpeers)
-" Shows the relevant GoDoc for the word under the cursor in a split window
-au FileType go nmap <leader>do <Plug>(go-doc-vertical)
-" Goto decleration/definition. Results are shown in a split window.
-au FileType go nmap <leader>de <Plug>(go-def-vertical)
+" ----> TAGBAR <---- "
+let g:tagbar_width = 50
 
-" ------------------- VIM-RUST --------------------- "
-let g:rustfmt_command = "rustup run nightly rustfmt"
-let g:rustfmt_autosave = 1
+" ----> UNDOTREE <---- "
+let g:undotree_WindowLayout = 4
+let g:undotree_SplitWidth = 50
 
-" ----------------------------------------------------------------------------- "
-" ----------------------------- F U N C T I O N S ----------------------------- "
-" ----------------------------------------------------------------------------- "
+" ----> VIM-AUTOFORMAT <---- "
+au BufWrite * :Autoformat
+let g:autoformat_autoindent = 0
+let g:autoformat_retab = 0
+let g:autoformat_remove_trailing_spaces = 0
 
-" Turns on syntax, but keeps vim colors cleared
+" --------------------------------------- "
+" ---------> F U N C T I O N S <--------- "
+" --------------------------------------- "
+
+" > Turns on syntax, but keeps vim colors cleared
 function SyntaxOn()
   syntax on
   call ClearColors()
 endfunction
 
-" Turns off syntax, keep vim interface colors cleared
+" > Turns off syntax, keep vim interface colors cleared
 function SyntaxOff()
   syntax off
   call ClearColors()
 endfunction
 
-" Sets all of vims highlights to none
+" > Sets all of vims highlights to none
 function ClearColors()
   highlight ModeMsg cterm=reverse
   highlight LineNr ctermbg=none ctermfg=none
@@ -373,24 +402,39 @@ function ClearColors()
   highlight SpellCap cterm=reverse,underline,italic ctermbg=none ctermfg=none
   highlight SpellRare cterm=reverse,underline ctermbg=none ctermfg=none
   highlight SpellLocal cterm=reverse,underline ctermbg=none ctermfg=none
+  highlight airline_warnings cterm=reverse ctermbg=none ctermfg=none
+  highlight airline_warning_bold cterm=reverse ctermbg=none ctermfg=none
+  highlight airline_warning_red cterm=reverse ctermbg=none ctermfg=none
+  highlight airline_tablabel cterm=reverse ctermbg=none ctermfg=none
+  highlight airline_tab cterm=reverse ctermbg=none ctermfg=none
+  highlight airline_tabsel cterm=reverse ctermbg=none ctermfg=none
+  highlight airline_tabtype cterm=reverse ctermbg=none ctermfg=none
+  highlight airline_z cterm=reverse ctermbg=none ctermfg=none
+  highlight airline_z_bold cterm=reverse ctermbg=none ctermfg=none
+  highlight airline_z_red cterm=reverse ctermbg=none ctermfg=none
+  highlight airline_tabsel_right ctermbg=none ctermfg=none
+  highlight airline_tabsel_right ctermbg=none ctermfg=none
+  highlight airline_tabmod_unsel ctermbg=none ctermfg=none
+  highlight airline_tabmod_unsel_right ctermbg=none ctermfg=none
 endfunction
 
-" Highlights all columns past 80
+" > Highlights all columns past 80
 function HighlightLineBoundryWall()
   let &colorcolumn=join(range(81,999),",")
 endfunction
 
-" Highlights column 81
+" > Highlights column 81
 function HighlightLineBoundryColumn()
-  let &colorcolumn=81
+  let &colorcolumn=join(range(81,84),",")
 endfunction
 
-" ----------------------------------------------------------------------------- "
-" --------------------------- C O L O R S C H E M E --------------------------- "
-" ----------------------------------------------------------------------------- "
+" ------------------------------------------- "
+" ---------> C O L O R S C H E M E <--------- "
+" ------------------------------------------- "
 
 colorscheme default
 
 call SyntaxOn()
+call HighlightLineBoundryColumn()
 
-" ----------------------------------------------------------------------------- "
+" ----------------------------------------------------------------- "

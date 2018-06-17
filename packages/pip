@@ -1,10 +1,13 @@
-awscli
-docker-compose
+autopep8
+flake8
 jedi
-neovim
+mypy
 pip
+pyfmt
 pylint
+python-language-server
 setuptools
 twine
 virtualenv
 wheel
+yapf

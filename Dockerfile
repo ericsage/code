@@ -1,4 +1,4 @@
-FROM ubuntu:latest
+FROM alpine
 
 LABEL \
 maintainer="Eric Sage <eric.david.sage@gmail.com>" \ 
@@ -9,20 +9,19 @@ ENV \
 REPONAME=orca \
 HOME=/root \
 TERM=xterm \
-GOPATH=/root/Code \
+GOPATH=/root/code \
 LANG=C.UTF-8 \
 LANGUAGE=C.UTF-8 \
 LC_ALL=C.UTF-8 \
 TZ=America/Los_Angeles
 
-# Update package repositories
-RUN apt-get -qq update && apt-get -qq install man-db
+# Set and update package repositories
+# COPY /repositories /etc/apk/repositories
+RUN apk update -q && apk upgrade --latest -q
 
-# Update and install system packages
-COPY /packages/apt $HOME/.packages/apt
-RUN DEBIAN_FRONTEND="noninteractive" \
-apt-get -qq upgrade && \
-apt-get -qq install $(cat $HOME/.packages/apt)
+# Install system packages
+COPY /packages/apk $HOME/.packages/apk
+RUN apk add -q $(cat $HOME/.packages/apk)
 
 # Install python packages
 COPY /packages/pip $HOME/.packages/pip
@@ -35,17 +34,15 @@ $GOPATH/bin/gometalinter --install &> /dev/null
 
 # Install vim plugins
 COPY /configfiles/.vimrc $HOME/.vimrc
-RUN \
-vim -u NONE +'silent! source ~/.vimrc' +PlugInstall +qa!
-# &> /dev/null
+RUN vim -u NONE +'silent! source ~/.vimrc' +PlugInstall! +qa! &> /dev/null
 
 # Set the initial directory
-WORKDIR $HOME/Code/src/github.com/ericsage
+WORKDIR $HOME/code/src/github.com/ericsage
 
 # Add and symlink user configuration files
-COPY . $HOME/Code/src/github.com/ericsage/$REPONAME
+COPY . $HOME/code/src/github.com/ericsage/$REPONAME
 RUN \
-rm -f $HOME/.vimrc $HOME/.bashrc $HOME/.bash_profile && \ 
+rm -f $HOME/.vimrc $HOME/.bashrc $HOME/.bash_profile && \
 touch ~/.stow-global-ignore && \
 cd $PWD/$REPONAME && stow --target $HOME configfiles && \
 rm ~/.stow-global-ignore
