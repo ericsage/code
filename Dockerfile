@@ -1,7 +1,7 @@
 FROM alpine
 
 LABEL \
-maintainer="Eric Sage <eric.david.sage@gmail.com>" \ 
+maintainer="Eric Sage <eric.david.sage@gmail.com>" \
 repository="https://github.com/ericsage/orca"
 
 # Dockerfile variables
@@ -49,3 +49,4 @@ rm ~/.stow-global-ignore
 
 # Set tmux as the starting process
 CMD /usr/bin/tmux -2 new-session -s ${REPONAME}
+o
