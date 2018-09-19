@@ -1,13 +1,10 @@
-autopep8
-flake8
-jedi
+black
+isort
 mypy
 pip
-pyfmt
 pylint
 python-language-server
 setuptools
 twine
 virtualenv
 wheel
-yapf

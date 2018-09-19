@@ -16,15 +16,14 @@
 # ----------------------------- #
 # ---------> U S E R <--------- #
 # ----------------------------- #
-
 [user]
   name = Eric Sage
   email = eric.david.sage@gmail.com
+# ----------------------------- #
 
 # ----------------------------------- #
 # ---------> O P T I O N S <--------- #
 # ----------------------------------- #
-
 [core]
   # > Use vim as the default editor
   editor = vim
@@ -40,13 +39,13 @@
 [http]
   # > Don't verify https connections
   sslVerify = false
+# ----------------------------------- #
 
 # ----------------------------------- #
 # ---------> A L I A S E S <--------- #
 # ----------------------------------- #
 
 # ----> URL <---- #
-
 [url "https://github.com/"]
   insteadOf = gh:
 
@@ -55,6 +54,7 @@
 
 [url "https://bitbucket.org/"]
   insteadOf = bb:
+# --------------- #
 
 # ----> COMMAND <---- #
 [alias]
@@ -69,13 +69,18 @@
   co = checkout
   br = branch
   diff = diff --word-diff
+# ------------------ #
+
+# ----------------------------------- #
 
 # ----------------------------------- #
 # ---------> F I L T E R S <--------- #
 # ----------------------------------- #
-
 # > A filter for large media files
 [filter "lfs"]
   clean = git lfs clean %f
   smudge = git lfs smudge %f
   required = true
+# ----------------------------------- #
+
+# ----------------------------------------------------------------- #

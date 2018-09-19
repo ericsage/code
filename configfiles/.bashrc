@@ -19,7 +19,6 @@
 # --------------------------------- #
 # ---------> P R O M P T <--------- #
 # --------------------------------- #
-
 PROMPT_COMMAND=__prompt_command
 
 __prompt_command() {
@@ -31,13 +30,14 @@ __prompt_command() {
   local failed='⚑'
 
   PS1=""
-  PS1+="\[$hourglass\] \t \[$compass\] \w "
+  PS1+="\[$hourglass\] \t \[$compass\] \w"
   PS1+=$(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\n⑂ \1 /')
   PS1+=$(git log --oneline -n 1 2> /dev/null | sed -e 's/\(.*\)/✎ \1 /')
   PS1+="\n"
   PS1+=$(if [ $exit -eq 0 ]; then echo $success; else echo "$failed"; fi)
   PS1+=" \! -> "
 }
+# --------------------------------- #
 
 # --------------------------------- #
 # ---------> C O N F I G <--------- #
@@ -57,6 +57,8 @@ HISTSIZE=
 # > Never truncate the history list
 HISTFILESIZE=
 
+# --------------------------------- #
+
 # ---------------------------------- #
 # ----------> L A Y O U T <--------- #
 # ---------------------------------- #
@@ -64,12 +66,21 @@ HISTFILESIZE=
 # ----> DEVELOPMENT <---- #
 mkdir -p $HOME/code/{pkg,bin,src}
 mkdir -p $HOME/code/src/github.com/ericsage
+# ----------------------- #
 
-# ----> SECRETS <-#
+# ----> NOTES <---- #
+mkdir -p $HOME/notes
+# ----------------- #
+
+# ----> SECRETS <---- #
 mkdir -p $HOME/.secrets/keys
+# ------------------- #
 
 # ----> VIM <---- #
 mkdir -p $HOME/.vim/{backup,tmp,undo}
+# --------------- #
+
+# ---------------------------------- #
 
 # ------------------------------------ #
 # ----------> A L I A S E S <--------- #
@@ -81,41 +92,55 @@ alias ..='cd ../'
 alias ...='cd ../../'
 
 alias code='cd ~/code/src'
+alias notes='cd ~/notes'
 alias sage='cd ~/code/src/github.com/ericsage'
 
 alias keys='cd ~/.secrets/keys'
+# -------------------- #
 
 # ----> VIM <---- #
 alias v='vim'
 alias vi='vim'
+alias vs='vim -O'
+# --------------- #
 
 # ----> GIT <---- #
 alias g='git'
+# --------------- #
 
 # ----> HISTORY <---- #
 alias gh='history | grep'
+# ------------------- #
 
 # ----> DOTFILES <---- #
 alias evi='vim ~/.vimrc'
-alias ebash='vim ~/.bash_rc'
+alias ebash='vim ~/.bashrc'
 alias egit='vim ~/.gitconfig'
 alias etmux='vim ~/.tmux.conf'
+# -------------------- #
 
 # ----> TMUX <---- #
-alias tm='tmux -u2'
 alias tmux='tmux -u2'
+alias tm='tmux -u2'
 alias tn='tmux new -s'
 alias ta='tmux attach -t'
+alias td='tmux detach'
 alias ts='tmux switch -t'
+alias tk='tmux kill-session -t'
+alias tl='tmux list-sessions'
 alias twn='tmux new-window'
 alias tws='tmux select-window'
 alias tv='tmux split-window'
 alias th='tmux split-window -h'
-alias tl='tmux list-sessions'
+alias tr='tmux rename-window'
+# ---------------- #
+
+# ------------------------------------ #
 
 # --------------------------------------- #
 # ---------> F U N C T I O N S <--------- #
 # --------------------------------------- #
+# Functions contains small utility functions.
 
 # > dkill: Kill and remove a container
 dkill () { eval "$(docker kill $1 && docker rm $1)" ; }
@@ -136,21 +161,26 @@ httpDebug () {
   total: %{time_total}\n
   " ;
 }
+# --------------------------------------- #
 
 # ----------------------------------- #
 # ---------> E X P O R T S <--------- #
 # ----------------------------------- #
+# Exports sets bash environment variables.
 
 # ----> GENERAL <---- #
 export LANG=en_US.UTF-8
 export PATH=$PATH:$HOME/code/bin
 export SAGE=$HOME/code/src/github.com/ericsage
+# ------------------- #
 
 # ----> GO <---- #
 export GOPATH=$HOME/code
+# -------------- #
 
 # ----> LESS <---- #
 export LESS='R'
+# ---------------- #
 
 # ----> FZF <---- #
 export FZF_DEFAULT_COMMAND='ag -g ""'
@@ -158,11 +188,16 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_CTRL_T_OPTS='--preview
 "(highlight -O ansi -l {} 2> /dev/null || cat {} || tree -C {}) 2> /dev/null |
   head -200"'
+# --------------- #
+
+# ----------------------------------- #
 
 # --------------------------------------- #
 # --------->  S O U R C I N G  <--------- #
 # --------------------------------------- #
+# Sourcing is used to source external bash scripts.
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+# --------------------------------------- #
 
 # ----------------------------------------------------------------- #

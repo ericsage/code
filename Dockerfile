@@ -27,14 +27,9 @@ RUN apk add -q $(cat $HOME/.packages/apk)
 COPY /packages/pip $HOME/.packages/pip
 RUN pip3 install --upgrade -qqq -r $HOME/.packages/pip
 
-# Install go packages
-COPY /packages/go $HOME/.packages/go
-RUN go get $(cat $HOME/.packages/go) && \
-$GOPATH/bin/gometalinter --install &> /dev/null
-
 # Install vim plugins
 COPY /configfiles/.vimrc $HOME/.vimrc
-RUN vim -u NONE +'silent! source ~/.vimrc' +PlugInstall! +qa! &> /dev/null
+RUN vim +'silent PlugInstall' +qa  &> /dev/null
 
 # Set the initial directory
 WORKDIR $HOME/code/src/github.com/ericsage
@@ -49,4 +44,3 @@ rm ~/.stow-global-ignore
 
 # Set tmux as the starting process
 CMD /usr/bin/tmux -2 new-session -s ${REPONAME}
-o

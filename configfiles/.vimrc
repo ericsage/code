@@ -10,8 +10,7 @@
 " 1. Plugins
 " 2. Settings
 " 3. Mappings
-" 4. Language Specifics
-" 6. Plugin Customizations
+" 4. Plugin Customizations
 " 5. Functions
 " 6. Colorscheme
 " -------------------- "
@@ -19,250 +18,370 @@
 " ----------------------------------- "
 " ---------> P L U G I N S <--------- "
 " ----------------------------------- "
+" > Plugins are loaded using https://github.com/junegunn/vim-plug. When Vim
+" > starts for the first time, it will automatically install Plug and try to
+" > install plugins and their dependancies.
 
+" > Autoloads the plugin manager Plug if it does not exist, and then installs
+" > plugins.
 if empty(glob('~/.vim/autoload/plug.vim'))
   silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   autocmd VimEnter * PlugInstall
 endif
 
-" ----------------------------------- "
-
 call plug#begin('~/.vim/plugged')
 
 " ----> STARTUP <---- "
-" > Reopen files at the last edit position
+" > Intelligently reopens files at the last edit position. Ignores commit
+" > messages, works with new file templates that jump to specific lines, and
+" > maximizes availabe content during restore.
 Plug 'farmergreg/vim-lastplace'
-" > Custom start screen with file picker
+
+" > A start screen that provides configurable lists to show recently used or
+" > bookmarked files and persistent sessions.
 Plug 'mhinz/vim-startify'
+" ------------------- "
 
 " ----> APPEARANCE <---- "
-" > Marks and removes all trailing spaces
+" > Highlights all trailing whitespace characters, except for whitespace on
+" > the current line in insert mode. Also provides a helper function to strip
+" > whitespace (:StripWhitespace).
 Plug 'ntpeters/vim-better-whitespace'
-" > Show fancy indent markers
+
+" > Shows visual markers for indent levels, alternating colors for each level.
+" > Detects both tab and space indent styles.
 Plug 'nathanaelkane/vim-indent-guides'
+" ---------------------- "
+
+" > A distraction free writing mode that also centers the current buffer in
+" > the terminal.
+Plug 'junegunn/goyo.vim'
 
 " ----> STATUS LINE <---- "
-" > Customizes the status line
+" > Draws a sectional statusline that provides more information and plugin
+" > integration than the default statusline.
 Plug 'vim-airline/vim-airline'
-" > Show buffers bar
-Plug 'bling/vim-bufferline'
 
-" ----> BROWSERS <---- "
-" > File browser
+" > Displays the buffer list in the statusline or the command bar.
+Plug 'bling/vim-bufferline'
+" ------------------------ "
+
+" ----> SIDEBARS <---- "
+" > A sidebar file system browser that provides basic file system operations.
 Plug 'scrooloose/nerdtree'
-" > Tag browser
+
+" > A sidebar tag browser that displays scope ordered tags for the current
+" > file. Tags are generated on demand.
 Plug 'majutsushi/tagbar'
-" > Undo browser
+
+" > A sidebar undo branch visualizer that allows selecting and restoring
+" > branchs. Also provides a live diff panel.
 Plug 'mbbill/undotree'
+" -------------------- "
 
 " ----> VERSION CONTROL <---- "
-" > Adds VCS markings in the gutter
+" > Adds VCS markings in the sign column, and supports many VCS systems
+" > including git, mercurial, bazaar, and subversion.
 Plug 'mhinz/vim-signify'
-" > Git markings for nerdtree
-Plug 'Xuyuanp/nerdtree-git-plugin'
-" > Mercurial markings for nerdtree
-Plug 'f4t-t0ny/nerdtree-hg-plugin'
+" --------------------------- "
 
 " ----> LINTING <---- "
-" > Multilingual Linter
+" > An asynchronous linting and fixer that also provides LSP support. LSP
+" > support provides various IDE like features such as omnicomplete and go to
+" > decleration.
 Plug 'w0rp/ale'
-" > Autoformater
-Plug 'Chiel92/vim-autoformat'
+" ------------------- "
 
-" ----> SEACRCH <---- "
-" > Fuzzy finder
+" ----> SEARCH <---- "
+" > A fuzzy finder that supports searching through history, buffers, files,
+" > tags, and much more.
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/fzf',
       \  { 'dir': '~/.fzf', 'do': './install --all' }
+" ------------------- "
 
-" ----> LANGUAGE SERVER CLIENT <---- "
-" > Dependancy for vim-lsp
-Plug 'prabirshrestha/async.vim'                                                     
-" > Core langugage server client
-Plug 'prabirshrestha/vim-lsp'                                                       
-" > Multilingual autocomplete
-Plug 'prabirshrestha/asyncomplete.vim'                                              
-" > Hook autocomplete into language server client
-Plug 'prabirshrestha/asyncomplete-lsp.vim'  
+" ----> LANGUAGE SUPPORT <---- "
+" > Adds comprehensive support for the Go programming language including
+" > better highlighting, omnicompletion, go toolchain integration, and much
+" > more.
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+" ---------------------------- "
 
 call plug#end()
+" ----------------------------------- "
 
 " ------------------------------------- "
 " ---------> S E T T I N G S <--------- "
 " ------------------------------------- "
+" > Settings contains are better defaults, and a few are quality of life
+" > improvements, or customize how Vim lays out supporting files.
 
 " ----> COMPATABILITY <---- "
-" > Turn vi compatability mode off
+" > Explicitly turn compatibility with vi off. This is done automatically when
+" > a user defined .vimrc is loaded, but there are cases, such as using -u
+" > from the command line, where nocompatible needs to be set by .vimrc.
 set nocompatible
-
-" ----> INDENTS <---- "
-" > Indent using filetype files if they exist/end Vundle
-filetype plugin indent on
-" > Copy the indentation from the previous line
-set autoindent
-" > Insert an extra indent level in some cases
-set smartindent
-
-" ----> INTERFACE <---- "
-" > Do not display syntax highlighting
-syntax off
-" > Hide the intro message
-set shortmess=I
-" > Show line numbers
-set number
-" > Use at least two columns to display line numbers
-set numberwidth=2
-
-" ----> STATUS LINE <---- "
-" > Show line number on status line
-set ruler
-" > Use two rows to display the status line
-set laststatus=2
-
-" ----> FILE WATCHING <---- "
-" > Reread the file when an external change is detected
-set autoread
-" > Write the file when a buffer switch occurs
-set autowrite
-
-" ----> WINDOWING <---- "
-" > Create horizontal splits below the current window
-set splitbelow
-" > Create vertical splits to the right of the current window
-set splitright
-
-" ----> CURSORS <---- "
-" > The number of lines kept above and below the cursor
-set scrolloff=5
-" > The number of lines to scroll at a time
-set scrolljump=5
-" > Highlight line with cursor in insert mode
-autocmd InsertEnter * set cursorline
-" > Remove cursor line highlight in command mode
-autocmd InsertLeave * set cursorline&
-
-" ----> COMMANDS <---- "
-" > Show partial commands as they are typed
-set showcmd
-" > Show a completion menu for commands with Tab
-set wildmenu
-" > Always choose the longest match for the completion menu
-set wildmode=longest:full
-
-" ----> DELIMITERS MATCHING <---- "
-" Briefly move the cursor to the matching brace when insertings a brace
-set showmatch
-" Move the cursor to the matched braced for a tenth of a second
-set matchtime=1
-
-" ----> INDENTATION <---- "
-" > Insert two spaces of indentation with reindent (>> <<)
-set shiftwidth=2
-" > Insert spaces when the Tab key is pressed
-set expandtab
-" > Insert two spaces when the Tab key is pressed
-set tabstop=2
-
-" ----> FOLDING <---- "
-" > Sets folds using the method defined in the current filetype syntax file
-set foldmethod=syntax
-" > Make all folds closed when a file is opened
-set foldlevelstart=20
+" ------------------------- "
 
 " ----> ENCODING <---- "
-" > Set vim's default encoding to utf-8
+" > Sets the character encoding to utf-8. It applies to text in the buffers,
+" > registers, text stored in the viminfo file, etc. By default,
+" > fileencoding is empty, and therefore, encoding will be used for file
+" > encodings as well.
 set encoding=utf-8
-" > Set the default encoding of files to utf-8
-set fileencoding=utf-8
+" -------------------- "
 
-" ----> KEYMAPS OPTIONS <---- "
-" > Time out on key codes
+" ----> INDENTS <---- "
+" > Copies the indentation from the previous line when starting a new line.
+set autoindent
+
+" > Automatically inserts one extra level of indentation in some cases.
+set smartindent
+" ------------------- "
+
+" ----> INTERFACE <---- "
+" > Do not display syntax highlighting by default.
+syntax off
+
+" > Hides the default intro message on startup.
+set shortmess=I
+
+" > Show line numbers next to the sign column.
+set number
+
+" > Minimal number of columns to use for the line number. Line numbers can
+" > still use more columns when needed.
+set numberwidth=2
+" --------------------- "
+
+" ----> STATUS LINE <---- "
+" > Show line number, column number, and relative position of the cursor in
+" the file in the bottom left of the status line.
+set ruler
+
+" > Always display a status line for every window.
+set laststatus=2
+" ----------------------- "
+
+" ----> FILE WATCHING <---- "
+" > If a file change is detected when running an external command, such as
+" > running a shell command, and it has not changed inside of vim, the file
+" > will be automatically read again.
+set autoread
+
+" > Writes the file if it has been modified when certain events occur,
+" including a buffer switch and running an external ocmmand.
+set autowrite
+" ------------------------- "
+
+" ----> WINDOWING <---- "
+" > Horizontal splits will put the new window below the current one.
+set splitbelow
+
+" > Vertical splits will put the new window to the right of the current one.
+set splitright
+" --------------------- "
+
+" ----> CURSORS <---- "
+" > Minimal number of lines to keep above and below the cursor. Setting it to
+" > a very large value will always keep the cursor in the center of the screen.
+set scrolloff=10
+
+" > Minimal number of lines to scroll when the cursor goes off the screen.
+set scrolljump=10
+
+" > Highlights the current line when in insert mode.
+autocmd InsertEnter * set cursorline
+
+" > Removes the highlight of the current line when leaving insert mode.
+autocmd InsertLeave * set cursorline&
+" ------------------- "
+
+" ----> COMMANDS <---- "
+" > Show (partial) command in the last line of the screen. This is turned on
+" > by default in Vim, and off in Vi.
+set showcmd
+
+" > Enhances command line completion when pressing wildchar (usually <Tab>).
+" > This will show a list of completion options for the command.
+set wildmenu
+
+" > Complete command line till longest common string, but also start wildmenu.
+set wildmode=longest:full
+" -------------------- "
+
+" ----> DELIMITERS MATCHING <---- "
+" Briefly move the cursor to the matching brace when insertings a brace.
+set showmatch
+
+" Move the cursor to the matched braced for a tenth of a second.
+set matchtime=1
+" ------------------------------- "
+
+" ----> INDENTATION <---- "
+" > Sets the number of columns used to indent with the reindent operations.
+set shiftwidth=2
+
+" > Hitting tab in insertmode will produce the appropriate number of spaces,
+" which is the number set by tabstop.
+set expandtab
+
+" > The number of spaces pressing the tab key will produce.
+set tabstop=2
+" ----------------------- "
+
+" ----> FOLDING <---- "
+" > Determines how folds will be created. syntax uses syntax highlighting
+" > items to specify what will be folded.
+set foldmethod=syntax
+
+" > Sets the foldlevel when starting to edit another buffer or window. Setting
+" > it to 0 starts with all folds closed, setting it to a higher value will
+" > start with less folds open.
+set foldlevelstart=0
+" ------------------- "
+
+" ----> KEYMAP OPTIONS <---- "
+" > By setting timeout and ttimeout, key codes and mappings that are
+" > incomplete will timeout. The timout length is determined by ttimeoutlne.
+set timeout
 set ttimeout
-" > The time in milliseconds that is waited for a key code sequence to complete
+
+" > The time in milliseconds that is waited for a key code sequence to complete.
 set ttimeoutlen=100
+" -------------------------- "
 
 " ----> SEARCHING <---- "
-" > Highlight all matches for a previous search pattern
+" > Highlight all matches for a previous search pattern. The highlighting can
+" > be cleared with :nohlsearch which does not turn off hlsearch.
 set hlsearch
-" > Search as characters are entered
+
+" > Incrementally searches as characters are entered into a search pattern.
 set incsearch
-" > Ignore the case of normal letters when searching
+
+" > Ignore the case of normal letters while searching.
 set ignorecase
-" > Ignore case when the pattern contains lowercase letters only
+
+" > Ignore case when the pattern contains lowercase letters only.
 set smartcase
-" > When completing a name (<C-n> <C-p>), match with current and included file
+
+" > Determines how keyword completion (<C-n> <C-p>) works. i scans current and
+" > included files for completion keywords.
 set complete-=i
+
 " > Show a menu when completing a name when there is more than one match
+" > available.
 set completeopt=menu
+" --------------------- "
 
 " ----> UTILITY FILES <---- "
-" > Create a backup of any opened files, overwriting any old backups
+" > A backup of the original file is made when writing to an existing file.
 set backup
-" > Backup files location, use complete path as backup file name (//)
-set backupdir=~/.vim/backup//
-" > Swap files location, use complete path as swap file name (//)
-set directory=~/.vim/tmp//
-" > Undo files location, use complete path as undo file name (//)
-set undodir=~/.vim/undo//
-" > Keep a history of undos
+set writebackup
+
+" > Writes undo history to a file.
 set undofile
 
+" > Backup files location, must use complete path as backup file name (//).
+set backupdir=~/.vim/backup//
+
+" > Swap files location, must use complete path as swap file name (//).
+set directory=~/.vim/tmp//
+
+" > Undo files location, must use complete path as undo file name (//).
+set undodir=~/.vim/undo//
+" ------------------------- "
+
 " ----> FILETYPES <---- "
-" > Enable filetype detection
+" > Enables filetype detection.
 filetype on
-" > Enable filetype-specific indenting
+
+" > Enable filetype-specific indenting. This requires a filetype specific
+" indent file to exist.
 filetype indent on
-" > Enable filetype-specific plugins
+
+" > Enable filetype-specific plugins, these plugins are located at
+" > ~/.vim/ftplugin and the plugins are named after their filetype (go.vim).
 filetype plugin on
+" --------------------- "
+
+" ------------------------------------- "
 
 " ------------------------------------- "
 " ---------> M A P P I N G S <--------- "
 " ------------------------------------- "
+"  > Mappings are various remappings over Vim's default keybindings, new
+"  keybindings, or shortcuts using leader or abbreviations of common comamnds.
 
 " ----> COMMAND <---- "
-" > Use ; as :
+" > By default ; repeats the latest f, t, F or T [count] times. This remaps it
+" > to more conveniently type commands without needing to shift.
 nnoremap ; :
+" ------------------- "
 
 " ----> LEADER KEYS <---- "
-" > Use comma as the leader and local leader
+" > Use comma as the leader and local leader. The local leader would noramally
+" > be used for certain types of files.
 let mapleader = ","
 let g:mapleader = ","
 let maplocalleader = ","
 let g:maplocalleader = ","
+" ----------------------- "
 
 " ----> QUICK ACCESS <---- "
-" > Edit vimrc
+" > Quickly edit vimrc.
 :nnoremap <leader>ev :vsplit $MYVIMRC<CR>
-" > Reload vimrc
-:nnoremap <leader>sv :source $MYVIMRC<CR>
+
+" > QUickly reload vimrc.
+:nnoremap <leader>rv :source $MYVIMRC<CR>
+" ------------------------ "
 
 " ----> WINDOWING <---- "
-" > Use movement keys to jump between windows
+" > Use movement keys to jump between windows. By default <C-j> scrolls one
+" > line down, <C-k> is unbound,  <C-h> backspaces, and <C-l> refreshes the
+" > screen.
 map <C-j> <C-W>j
 map <C-k> <C-W>k
 map <C-h> <C-W>h
 map <C-l> <C-W>l
+" --------------------- "
 
 " ----> REDOS <---- "
-" > Undo a redo with U
+" > Undo a redo with U. By default, U resotres a line to the state it was in
+" > when the cursor moved to it.
 nnoremap U :redo<CR>
+" ----------------- "
 
 " ----> ABBREVIATIONS <---- "
-" > Shortcuts for viewing registers and buffers
+" > Shortcuts for viewing registers and buffers.
 command Reg registers
 command Buf buffers
+" ------------------------- "
+
+" ----> BUFFERS <----"
+:nnoremap <C-n> :bnext<CR>
+:nnoremap <C-p> :bprevious<CR>
+" -------------------"
+
+" ----> TABS <----"
+:nnoremap <leader>tn :tabnext<CR>
+:nnoremap <leader>tp :tavprevious<CR>
+" ----------------"
 
 " ----> PASTE <---- "
 nnoremap <leader>p :set paste<CR>
 nnoremap <leader>np :set nopaste<CR>
+" ----------------- "
 
 " ----> OPEN DRAWERS <---- "
 " > Open Nerdree drawer with Ctrl-\
-nnoremap <silent> <C-\> :NERDTreeToggle<CR>
+nnoremap <silent> <C-]> :NERDTreeToggle<CR>
 " > Open Tagbar drawer with Ctrl-]
-nnoremap <silent> <C-]> :TagbarToggle<CR>
+nnoremap <silent> <C-\> :TagbarToggle<CR>
 " > Open Undotree drawer with Ctrl-[
 nnoremap <silent> <C-J> :UndotreeToggle<CR>
+" ----> OPEN DRAWERS <---- "
+" ------------------------ "
 
 " ----> FINDING <---- "
 " > Search files in git
@@ -277,41 +396,57 @@ nnoremap <leader>fc :History:<CR>
 nnoremap <leader>fs :History/<CR>
 " > Search key mappings
 noremap <leader>fm :Maps<CR>
+" ------------------- "
 
-" ----> SEARCHING <---- "
-" > Clear the search highlighting
-nnoremap <silent> . :nohlsearch<CR>
+" ----> ERRORS AND LINTING <---- "
+" Move to the next ALE error or warning.
+noremap <leader>nerr <Plug>(ale_next_wrap)
 
-" ------------------------------------------------------ "
-" ---------> L A N G U A G E  S P E C F I C S <--------- "
-" ------------------------------------------------------ "
+" Move to the previous ALE error or warning.
+noremap <leader>perr <Plug>(ale_previous_wrap)
+" ------------------------------ "
 
-" ----> PYTHON <---- "
-au BufNewFile,BufRead *.py
-      \ set tabstop=4       |
-      \ set softtabstop=4   |
-      \ set shiftwidth=4    |
-      \ set textwidth=79    |
-      \ set expandtab       |
-      \ set autoindent      |
-      \ set fileformat=unix |
+" ----> DEVELOPMENT <---- "
+" These ALE keybindings provide IDE like features, but require a language
+" server to be set for the filetype. These settings should go into the file
+" type plugins directory (~/.vim/ftplugin).
 
-let g:formatter_yapf_style = 'facebook'
+" Move the cursor to where the symbol is defined, opening a new buffer if
+" necessary.
+noremap <leader>def :ALEGoToDefinition<CR>
 
-if executable('pyls')
-      au User lsp_setup call lsp#register_server({
-             \ 'name': 'pyls',
-             \ 'cmd': {server_info->['pyls']},
-             \ 'whitelist': ['python'],
-             \ })
-endif
+" Show where the symbol is defined in a new tab.
+noremap <leader>deftab :ALEGoToDefinitionInTab<CR>
+
+" Show all references to symbol.
+noremap <leader>ref :ALEFindReferences<CR>
+
+" Symbol Information.
+noremap <leader>sym :ALEHover<CR>
+" ----------------------- "
+
+" ----> SEARCH <---- "
+" > Clear the search highlighting.
+nnoremap <leader>clear  :nohlsearch<CR>
+" ------------------ "
+
+" ----> DISTRACTION FREE MODE <---- "
+" > Enter and exit Goyo.
+nnoremap <leader>goyo :Goyo <bar> highlight StatusLineNC ctermfg=white <CR>
+" --------------------------------- "
 
 " --------------------------------------------------------------- "
 " ---------> P L U G I N   C U S T O M I Z A T I O N S <--------- "
 " --------------------------------------------------------------- "
+" > Plugin Customizations tweaks plugin settings and adds a few
+" > customizations. Langauge specific customizations are in filetype plugins
+" > (ftplugins).
 
 " ----> STARTIFY <---- "
+" > These files will appear in the bookmarks section of the start menu.
 let g:startify_bookmarks = [ '~/.vimrc', '~/.bashrc', '~/.tmux.conf' ]
+
+" > Adds a vanity header for the start menu.
 let g:startify_custom_header = [
       \ " ----------------------------------------------------------------- ",
       \ " -V----------V--- SSSSSSS AAAAAAA GGGGGGG EEEEEEE ---V----------V- ",
@@ -321,50 +456,95 @@ let g:startify_custom_header = [
       \ " -M----------M--- SSSSSSS A     A GGGGGGG EEEEEEE ---M----------M- ",
       \ " ----------------------------------------------------------------- ",
       \ ]
+" -------------------- "
 
 " ----> AIRLINE <---- "
+" > Enable plugin extensions for airline so it will display plugin specific
+" > information.
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#ale#enabled = 1
-let g:airline#extensions#bufferline#enabled = 0
+let g:airline#extensions#bufferline#enabled = 1
+" ------------------- "
 
 " ----> ALE <---- "
-let g:ale_sign_column_always = 1
 let g:ale_lint_delay = 1000
+let g:ale_set_highlights = 0
 let g:ale_fix_on_save = 1
+let g:ale_sign_column_always = 1
+let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+" ---------------- "
 
 " ----> NERDTREE <---- "
-:let g:NERDTreeWinSize = 50
+" > Sets the number of columns the NERDTree sidebar will occupy.
+let g:NERDTreeWinSize = 50
+" -------------------- "
 
 " ----> TAGBAR <---- "
+" > Sets the number of columns the Tabgar sidebar will occupy.
 let g:tagbar_width = 50
+" ------------------ "
 
 " ----> UNDOTREE <---- "
+" > The WindowLayout affects the position of the UndoTree. 4 opens the sidebar
+" > on the right hand side.
 let g:undotree_WindowLayout = 4
-let g:undotree_SplitWidth = 50
 
-" ----> VIM-AUTOFORMAT <---- "
-au BufWrite * :Autoformat
-let g:autoformat_autoindent = 0
-let g:autoformat_retab = 0
-let g:autoformat_remove_trailing_spaces = 0
+" > Sets the number of columns the Undotree sidebar wil occupy.
+let g:undotree_SplitWidth = 50
+" -------------------- "
+
+" ----> GOYO <---- "
+" > goyo_{enter,leave} are called during Goyo standard lifecycle hooks, and
+" > automatically hide and show the tmux statusbar.
+
+" > goyo_enter will be called when entering Goyo, and will turn the tmux
+" > statusbar off.
+function! s:goyo_enter()
+  silent !tmux set status off
+  silent !tmux list-panes -F '\#F' | grep -q Z || tmux resize-pane -Z
+  set noshowmode
+  set noshowcmd
+  set scrolloff=999
+endfunction
+
+" > goyo_leave will be called when leaving Goyo, and will turn the tmux
+" > statusbar back on.
+function! s:goyo_leave()
+  silent !tmux set status on
+  silent !tmux list-panes -F '\#F' | grep -q Z && tmux resize-pane -Z
+  set showmode
+  set showcmd
+  set scrolloff=5
+endfunction
+
+" Adds the custom enter and leave functions to the Goyo hooks.
+autocmd! User GoyoEnter nested call <SID>goyo_enter()
+autocmd! User GoyoLeave nested call <SID>goyo_leave()
+" ---------------- "
+
+" --------------------------------------------------------------- "
 
 " --------------------------------------- "
 " ---------> F U N C T I O N S <--------- "
 " --------------------------------------- "
+" > Functions contains various utility functions.
 
-" > Turns on syntax, but keeps vim colors cleared
+" > SyntaxOn turns syntax highlighting, but also removes all highlighting
+" > besides the syntax highlighting, leaving Vim primarily colorless.
 function SyntaxOn()
   syntax on
   call ClearColors()
 endfunction
 
-" > Turns off syntax, keep vim interface colors cleared
+" > SyntaxOff turns off all highlighting, including syntax highlightinh,
+" > leaving Vim completely colorless.
 function SyntaxOff()
   syntax off
   call ClearColors()
 endfunction
 
-" > Sets all of vims highlights to none
+" > ClearColors should remove all highlighting, with the exception of syntax
+" > highlighting, leaving Vim mostly colorless.
 function ClearColors()
   highlight ModeMsg cterm=reverse
   highlight LineNr ctermbg=none ctermfg=none
@@ -402,39 +582,36 @@ function ClearColors()
   highlight SpellCap cterm=reverse,underline,italic ctermbg=none ctermfg=none
   highlight SpellRare cterm=reverse,underline ctermbg=none ctermfg=none
   highlight SpellLocal cterm=reverse,underline ctermbg=none ctermfg=none
-  highlight airline_warnings cterm=reverse ctermbg=none ctermfg=none
-  highlight airline_warning_bold cterm=reverse ctermbg=none ctermfg=none
-  highlight airline_warning_red cterm=reverse ctermbg=none ctermfg=none
-  highlight airline_tablabel cterm=reverse ctermbg=none ctermfg=none
-  highlight airline_tab cterm=reverse ctermbg=none ctermfg=none
-  highlight airline_tabsel cterm=reverse ctermbg=none ctermfg=none
-  highlight airline_tabtype cterm=reverse ctermbg=none ctermfg=none
-  highlight airline_z cterm=reverse ctermbg=none ctermfg=none
-  highlight airline_z_bold cterm=reverse ctermbg=none ctermfg=none
-  highlight airline_z_red cterm=reverse ctermbg=none ctermfg=none
-  highlight airline_tabsel_right ctermbg=none ctermfg=none
-  highlight airline_tabsel_right ctermbg=none ctermfg=none
-  highlight airline_tabmod_unsel ctermbg=none ctermfg=none
-  highlight airline_tabmod_unsel_right ctermbg=none ctermfg=none
-endfunction
+  highlight Visual cterm=reverse ctermbg=none
+  highlight Comment cterm=bold
+  endfunction
 
-" > Highlights all columns past 80
+" > HighlightLineBoundryWall highlights all columns past column 80.
 function HighlightLineBoundryWall()
   let &colorcolumn=join(range(81,999),",")
 endfunction
 
-" > Highlights column 81
+" > HighlightLineBoundryColumn highlights the three columns that follow column
+" > 80.
 function HighlightLineBoundryColumn()
   let &colorcolumn=join(range(81,84),",")
 endfunction
+" --------------------------------------- "
 
 " ------------------------------------------- "
 " ---------> C O L O R S C H E M E <--------- "
 " ------------------------------------------- "
+" > Colorscheme sets the look and feel of Vim. By default, the colorscheme is
+" > completely removed, except for syntax highlighting.
 
+" > Use the builtin default colorscheme.
 colorscheme default
 
+" > Turn on Syntax Highlighting, clear all other highlightinh.
 call SyntaxOn()
+
+" > Highlight three columns demarcating where column 80 ends.
 call HighlightLineBoundryColumn()
+" ------------------------------------------- "
 
 " ----------------------------------------------------------------- "
