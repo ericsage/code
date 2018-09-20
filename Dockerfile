@@ -21,9 +21,6 @@ WORKDIR $HOME/code/src/github.com/ericsage
 # Copy the repository into the container.
 COPY . $REPONAME
 
-# Set the system package repositories.
-# COPY $REPONAME/repositories /etc/apk/repositories
-
 # Update and upgrade system packages.
 RUN apk update -q && apk upgrade --latest -q
 
