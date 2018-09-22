@@ -6,8 +6,8 @@ repository="https://github.com/ericsage/orca"
 
 # Setup the environment and variables for the Dockerfile.
 ENV \
-REPONAME=orca \
-HOME=/root \
+REPONAME=home \
+HOMEDIR=/root \
 TERM=xterm \
 GOPATH=/root/code \
 LANG=C.UTF-8 \
@@ -16,7 +16,7 @@ LC_ALL=C.UTF-8 \
 TZ=America/Los_Angeles
 
 # Set the initial directory to where code should live.
-WORKDIR $HOME/code/src/github.com/ericsage
+WORKDIR $HOMEDIR/code/src/github.com/ericsage
 
 # Copy the repository into the container.
 COPY . $REPONAME
@@ -31,13 +31,13 @@ RUN apk add -q $(cat $REPONAME/packages/apk)
 RUN pip3 install --upgrade -qqq -r $REPONAME/packages/pip
 
 # Clone dotfiles into the container.
-RUN git clone http://github.com/ericsage/dotfiles dotfiles
+RUN git clone https://github.com/ericsage/dotfiles dotfiles
 
 # Symlink the dotfiles into the home directory with stow.
 RUN \
-rm -f $HOME/.vimrc $HOME/.bashrc $HOME/.bash_profile && \
+rm -f $HOMEDIR/.vimrc $HOMEDIR/.bashrc $HOMEDIR/.bash_profile && \
 touch ~/.stow-global-ignore && \
-stow --target $HOME dotfiles && \
+stow --target $HOMEDIR dotfiles && \
 rm ~/.stow-global-ignore
 
 # Install vim plugins.
